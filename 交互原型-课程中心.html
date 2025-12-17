@@ -316,6 +316,112 @@
             color: #fff;
             border-color: #667eea;
         }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .nav-left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .icon-btn, .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .search-bar {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .search-input-group {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .search-input {
+                width: 100%;
+            }
+
+            .search-btn {
+                width: 100%;
+            }
+
+            .filter-tags {
+                gap: 8px;
+            }
+
+            .filter-tag {
+                padding: 6px 12px;
+                font-size: 12px;
+            }
+
+            .course-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .course-cover {
+                height: 140px;
+                font-size: 48px;
+            }
+
+            .course-content {
+                padding: 12px;
+            }
+
+            .course-title {
+                font-size: 14px;
+            }
+
+            .course-meta {
+                flex-wrap: wrap;
+                gap: 8px;
+                font-size: 11px;
+            }
+
+            .pagination {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .page-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filter-tags {
+                gap: 6px;
+            }
+
+            .filter-tag {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+        }
     </style>
 </head>
 <body>

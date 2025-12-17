@@ -383,6 +383,131 @@
             font-weight: bold;
             color: #667eea;
         }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .nav-left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .icon-btn, .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .card-preview {
+                padding: 20px;
+                margin-bottom: 16px;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .user-avatar {
+                width: 60px;
+                height: 60px;
+            }
+
+            .user-details h2 {
+                font-size: 20px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 12px;
+            }
+
+            .stat-value {
+                font-size: 20px;
+            }
+
+            .stat-label {
+                font-size: 11px;
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .main-card {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .radar-container {
+                height: 250px;
+            }
+
+            .radar-chart {
+                width: 250px;
+                height: 250px;
+            }
+
+            .ability-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+
+            .ability-progress {
+                width: 100%;
+                margin: 0;
+            }
+
+            .ability-value {
+                text-align: left;
+            }
+
+            .service-item, .need-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .radar-container {
+                height: 200px;
+            }
+
+            .radar-chart {
+                width: 200px;
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>

@@ -310,6 +310,112 @@
             cursor: not-allowed;
             transform: none;
         }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .nav-left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .icon-btn, .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .current-level-card {
+                padding: 20px;
+                margin-bottom: 16px;
+            }
+
+            .level-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+
+            .level-info h2 {
+                font-size: 24px;
+            }
+
+            .level-badge {
+                font-size: 36px;
+            }
+
+            .levels-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+                margin-bottom: 24px;
+            }
+
+            .level-card {
+                padding: 16px;
+            }
+
+            .level-icon {
+                font-size: 36px;
+            }
+
+            .level-name {
+                font-size: 16px;
+            }
+
+            .detail-panel {
+                padding: 20px;
+            }
+
+            .panel-title {
+                font-size: 20px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .requirement-item, .benefit-item, .obligation-item {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .item-icon {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .levels-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .current-level-card {
+                padding: 16px;
+            }
+
+            .level-info h2 {
+                font-size: 20px;
+            }
+        }
     </style>
 </head>
 <body>

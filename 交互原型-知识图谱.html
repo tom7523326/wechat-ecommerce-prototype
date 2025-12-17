@@ -382,6 +382,116 @@
             height: 16px;
             border-radius: 4px;
         }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .nav-left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .icon-btn, .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 16px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+
+            .filter-title {
+                font-size: 14px;
+            }
+
+            .filter-item {
+                padding: 10px;
+                font-size: 14px;
+            }
+
+            .graph-area {
+                height: 400px;
+            }
+
+            .graph-controls {
+                top: 8px;
+                right: 8px;
+            }
+
+            .control-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 16px;
+            }
+
+            .knowledge-node {
+                width: 100px;
+                height: 70px;
+            }
+
+            .node-title {
+                font-size: 11px;
+            }
+
+            .node-status {
+                font-size: 9px;
+            }
+
+            .detail-panel {
+                width: 100%;
+                padding: 16px;
+                max-height: 50vh;
+                overflow-y: auto;
+            }
+
+            .panel-title {
+                font-size: 16px;
+            }
+
+            .legend {
+                bottom: 8px;
+                left: 8px;
+                padding: 8px;
+                font-size: 11px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .graph-area {
+                height: 300px;
+            }
+
+            .knowledge-node {
+                width: 80px;
+                height: 60px;
+            }
+
+            .node-title {
+                font-size: 10px;
+            }
+        }
     </style>
 </head>
 <body>

@@ -380,6 +380,91 @@
             font-size: 14px;
             opacity: 0.9;
         }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .nav-left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .icon-btn, .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .diagnosis-card, .path-card, .milestone-card {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+
+            .weakness-item {
+                padding: 10px;
+            }
+
+            .path-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .path-title {
+                font-size: 18px;
+            }
+
+            .path-progress {
+                width: 100%;
+            }
+
+            .progress-bar {
+                width: 100%;
+            }
+
+            .step-content {
+                padding: 12px;
+            }
+
+            .step-name {
+                font-size: 14px;
+            }
+
+            .step-desc {
+                font-size: 13px;
+            }
+
+            .milestone-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .milestone-rewards {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
     </style>
 </head>
 <body>
