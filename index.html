@@ -3,44 +3,97 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=原型索引.html">
-    <title>微信电商能力提升平台 - 原型索引</title>
+    <title>微信电商能力提升平台</title>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #fff;
+            padding: 20px;
         }
         .container {
             text-align: center;
+            max-width: 600px;
+            width: 100%;
         }
-        .loading {
-            font-size: 18px;
-            margin-top: 20px;
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
         }
-        a {
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            margin-top: 30px;
+        }
+        .link-btn {
+            display: block;
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 8px;
             color: #fff;
-            text-decoration: underline;
+            text-decoration: none;
+            font-size: 16px;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        .link-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        .info {
+            margin-top: 30px;
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+            .link-btn {
+                font-size: 14px;
+                padding: 14px 20px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>正在跳转到原型索引页...</h1>
-        <div class="loading">
-            如果页面没有自动跳转，请 <a href="原型索引.html">点击这里</a>
+        <h1>微信电商能力提升平台</h1>
+        <p style="font-size: 18px; margin-bottom: 10px;">产品原型演示</p>
+        <div class="links">
+            <a href="原型索引.html" class="link-btn">📋 原型索引页（推荐）</a>
+            <a href="交互原型-首页.html" class="link-btn">🏠 首页</a>
+            <a href="交互原型-知识图谱.html" class="link-btn">🗺️ 知识图谱</a>
+            <a href="交互原型-课程中心.html" class="link-btn">📚 课程中心</a>
+        </div>
+        <div class="info">
+            <p>如果链接无法打开，请尝试直接访问：</p>
+            <p style="margin-top: 10px; word-break: break-all; font-size: 12px;">
+                https://tom7523326.github.io/wechat-ecommerce-prototype/原型索引.html
+            </p>
         </div>
     </div>
     <script>
-        // 备用跳转
+        // 自动跳转到索引页（3秒后）
         setTimeout(function() {
-            window.location.href = '原型索引.html';
-        }, 1000);
+            try {
+                window.location.href = '原型索引.html';
+            } catch(e) {
+                console.log('自动跳转失败，请手动点击链接');
+            }
+        }, 3000);
     </script>
 </body>
 </html>
