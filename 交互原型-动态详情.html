@@ -292,6 +292,101 @@
         .comment-action:hover {
             color: #667eea;
         }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 12px;
+                height: 56px;
+            }
+
+            .nav-left {
+                gap: 12px;
+            }
+
+            .logo {
+                font-size: 16px;
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .nav-right {
+                gap: 8px;
+            }
+
+            .icon-btn, .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                padding: 16px;
+            }
+
+            .post-card {
+                padding: 16px;
+                margin-bottom: 16px;
+            }
+
+            .post-avatar {
+                width: 48px;
+                height: 48px;
+            }
+
+            .post-user-name {
+                font-size: 16px;
+            }
+
+            .post-content {
+                font-size: 14px;
+            }
+
+            .post-images {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .post-image {
+                height: 150px;
+            }
+
+            .post-actions {
+                gap: 16px;
+            }
+
+            .action-btn {
+                padding: 6px 12px;
+                font-size: 13px;
+            }
+
+            .comments-section {
+                padding: 16px;
+            }
+
+            .section-title {
+                font-size: 16px;
+            }
+
+            .comment-input {
+                min-height: 60px;
+                font-size: 14px;
+            }
+
+            .comment-submit {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .post-images {
+                grid-template-columns: 1fr;
+            }
+
+            .post-image {
+                height: 200px;
+            }
+        }
     </style>
 </head>
 <body>
