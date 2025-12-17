@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>活动详情 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .activity-header {
+            background: #fff;
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .activity-cover {
+            width: 100%;
+            height: 300px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 120px;
+            color: #fff;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .activity-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            padding: 8px 16px;
+            border-radius: 16px;
+            font-size: 14px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            font-weight: bold;
+        }
+
+        .activity-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .activity-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            margin-bottom: 24px;
+            color: #666;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .activity-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .activity-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #07c160;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #06ad56;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .content-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        .schedule-list {
+            list-style: none;
+        }
+
+        .schedule-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            gap: 16px;
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .schedule-time {
+            min-width: 120px;
+            font-weight: bold;
+            color: #667eea;
+        }
+
+        .schedule-content {
+            flex: 1;
+        }
+
+        .schedule-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .schedule-desc {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .participants-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .participant-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+
+        .participant-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .participant-info {
+            flex: 1;
+        }
+
+        .participant-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .participant-level {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .review-section {
+            margin-top: 24px;
+        }
+
+        .review-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .review-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .review-info {
+            flex: 1;
+        }
+
+        .review-name {
+            font-weight: bold;
+        }
+
+        .review-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .review-content {
+            color: #666;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="logo">活动详情</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="activity-header">
+            <div class="activity-cover">
+                📢
+                <div class="activity-badge">进行中</div>
+            </div>
+            <h1 class="activity-title">本月微信电商政策解读</h1>
+            <div class="activity-meta">
+                <div class="meta-item">
+                    <span>📅</span>
+                    <span>2024-01-15 19:00-20:30</span>
+                </div>
+                <div class="meta-item">
+                    <span>📍</span>
+                    <span>线上直播</span>
+                </div>
+                <div class="meta-item">
+                    <span>👥</span>
+                    <span>200人参与</span>
+                </div>
+                <div class="meta-item">
+                    <span>⏰</span>
+                    <span>已报名 156人</span>
+                </div>
+            </div>
+            <p class="activity-description">
+                本次活动将邀请微信电商政策专家，深入解读本月最新政策变化，包括平台规则更新、运营规范调整、
+                营销活动政策等内容。帮助学员及时了解政策动态，合规运营，避免违规风险。
+            </p>
+            <div class="activity-actions">
+                <button class="btn btn-primary" onclick="registerActivity()">立即报名</button>
+                <button class="btn btn-secondary" onclick="setReminder()">设置提醒</button>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">活动流程</h2>
+            <ul class="schedule-list">
+                <li class="schedule-item">
+                    <div class="schedule-time">19:00-19:10</div>
+                    <div class="schedule-content">
+                        <div class="schedule-title">开场介绍</div>
+                        <div class="schedule-desc">活动背景和讲师介绍</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-time">19:10-20:00</div>
+                    <div class="schedule-content">
+                        <div class="schedule-title">政策解读</div>
+                        <div class="schedule-desc">详细解读本月政策变化和影响</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-time">20:00-20:20</div>
+                    <div class="schedule-content">
+                        <div class="schedule-title">互动问答</div>
+                        <div class="schedule-desc">学员提问，讲师答疑</div>
+                    </div>
+                </li>
+                <li class="schedule-item">
+                    <div class="schedule-time">20:20-20:30</div>
+                    <div class="schedule-content">
+                        <div class="schedule-title">总结与资料分享</div>
+                        <div class="schedule-desc">活动总结和资料下载</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">已报名学员 (156人)</h2>
+            <div class="participants-list">
+                <div class="participant-item">
+                    <div class="participant-avatar"></div>
+                    <div class="participant-info">
+                        <div class="participant-name">张同学</div>
+                        <div class="participant-level">A级学员</div>
+                    </div>
+                </div>
+                <div class="participant-item">
+                    <div class="participant-avatar"></div>
+                    <div class="participant-info">
+                        <div class="participant-name">李同学</div>
+                        <div class="participant-level">B级学员</div>
+                    </div>
+                </div>
+                <div class="participant-item">
+                    <div class="participant-avatar"></div>
+                    <div class="participant-info">
+                        <div class="participant-name">王同学</div>
+                        <div class="participant-level">S级学员</div>
+                    </div>
+                </div>
+                <div class="participant-item">
+                    <div class="participant-avatar"></div>
+                    <div class="participant-info">
+                        <div class="participant-name">赵同学</div>
+                        <div class="participant-level">B级学员</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2 class="section-title">往期回顾</h2>
+            <div class="review-section">
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-avatar"></div>
+                        <div class="review-info">
+                            <div class="review-name">2023年12月政策解读</div>
+                            <div class="review-time">2023-12-15</div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        上期活动重点解读了微信小店新功能政策，包括直播带货规范、商品管理要求等内容。
+                        <a href="#" style="color: #667eea; margin-left: 8px;">查看录播 →</a>
+                    </div>
+                </div>
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="review-avatar"></div>
+                        <div class="review-info">
+                            <div class="review-name">2023年11月政策解读</div>
+                            <div class="review-time">2023-11-15</div>
+                        </div>
+                    </div>
+                    <div class="review-content">
+                        解读了视频号电商政策更新，包括内容规范、营销活动政策等。
+                        <a href="#" style="color: #667eea; margin-left: 8px;">查看录播 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = '交互原型-活动中心.html';
+        }
+
+        function registerActivity() {
+            alert('报名活动（弹出报名表单）');
+        }
+
+        function setReminder() {
+            alert('已设置活动提醒');
+        }
+    </script>
+</body>
+</html>
+

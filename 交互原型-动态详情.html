@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>动态详情 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .post-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .post-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .post-user-info {
+            flex: 1;
+        }
+
+        .post-user-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 4px;
+        }
+
+        .post-meta {
+            font-size: 14px;
+            color: #999;
+            display: flex;
+            gap: 12px;
+        }
+
+        .post-level {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #e6f7f0;
+            color: #07c160;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .post-content {
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+            margin-bottom: 16px;
+        }
+
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 200px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            object-fit: cover;
+            cursor: pointer;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .post-tag {
+            padding: 4px 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+            cursor: pointer;
+        }
+
+        .post-tag:hover {
+            background: #e0e0e0;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            transition: all 0.3s;
+            border-radius: 4px;
+        }
+
+        .action-btn:hover {
+            color: #667eea;
+            background: #f5f5f5;
+        }
+
+        .action-btn.active {
+            color: #667eea;
+            background: #e6f7f0;
+        }
+
+        .comments-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .comment-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 16px;
+            resize: none;
+            min-height: 80px;
+        }
+
+        .comment-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .comment-submit {
+            padding: 8px 24px;
+            background: #07c160;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 24px;
+        }
+
+        .comment-submit:hover {
+            background: #06ad56;
+        }
+
+        .comment-list {
+            list-style: none;
+        }
+
+        .comment-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .comment-item:last-child {
+            border-bottom: none;
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .comment-user-info {
+            flex: 1;
+        }
+
+        .comment-user-name {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .comment-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .comment-content {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .comment-actions {
+            display: flex;
+            gap: 16px;
+            padding-left: 52px;
+        }
+
+        .comment-action {
+            font-size: 12px;
+            color: #999;
+            cursor: pointer;
+        }
+
+        .comment-action:hover {
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="logo">动态详情</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="post-card">
+            <div class="post-header">
+                <div class="post-avatar" onclick="goToProfile()"></div>
+                <div class="post-user-info">
+                    <div class="post-user-name">
+                        张同学
+                        <span class="post-level">A级</span>
+                    </div>
+                    <div class="post-meta">
+                        <span>3小时前</span>
+                        <span>经验分享</span>
+                    </div>
+                </div>
+            </div>
+            <div class="post-content">
+                分享一个提升GMV的小技巧：在直播前做好预热，提前3天发布预告视频，
+                并在社群中预热，可以有效提升直播观看人数和转化率。我通过这个方法，
+                单场直播GMV提升了30%！
+                
+                具体操作步骤：
+                1. 提前3天发布预告视频，介绍直播主题和亮点
+                2. 在微信群、朋友圈等渠道进行预热
+                3. 直播当天提前1小时再次提醒
+                4. 直播中设置互动环节，提高参与度
+            </div>
+            <div class="post-images">
+                <div class="post-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                <div class="post-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                <div class="post-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+            </div>
+            <div class="post-tags">
+                <span class="post-tag" onclick="filterByTag('经验分享')">#经验分享</span>
+                <span class="post-tag" onclick="filterByTag('直播技巧')">#直播技巧</span>
+            </div>
+            <div class="post-actions">
+                <button class="action-btn active" onclick="likePost()">
+                    👍 24
+                </button>
+                <button class="action-btn" onclick="commentPost()">
+                    💬 8
+                </button>
+                <button class="action-btn" onclick="sharePost()">
+                    🔄 5
+                </button>
+            </div>
+        </div>
+
+        <div class="comments-section">
+            <div class="section-title">评论 (8)</div>
+            <textarea class="comment-input" placeholder="写下你的评论..."></textarea>
+            <button class="comment-submit" onclick="submitComment()">发布评论</button>
+            
+            <ul class="comment-list">
+                <li class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-avatar"></div>
+                        <div class="comment-user-info">
+                            <div class="comment-user-name">李同学</div>
+                            <div class="comment-time">2小时前</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        感谢分享！我也试试这个方法，期待效果。
+                    </div>
+                    <div class="comment-actions">
+                        <span class="comment-action" onclick="likeComment('1')">👍 3</span>
+                        <span class="comment-action" onclick="replyComment('1')">回复</span>
+                    </div>
+                </li>
+                <li class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-avatar"></div>
+                        <div class="comment-user-info">
+                            <div class="comment-user-name">王同学</div>
+                            <div class="comment-time">3小时前</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        这个方法确实有效，我用了之后观看人数提升了50%！
+                    </div>
+                    <div class="comment-actions">
+                        <span class="comment-action" onclick="likeComment('2')">👍 5</span>
+                        <span class="comment-action" onclick="replyComment('2')">回复</span>
+                    </div>
+                </li>
+                <li class="comment-item">
+                    <div class="comment-header">
+                        <div class="comment-avatar"></div>
+                        <div class="comment-user-info">
+                            <div class="comment-user-name">赵同学</div>
+                            <div class="comment-time">4小时前</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        请问预热视频一般多长时间比较合适？
+                    </div>
+                    <div class="comment-actions">
+                        <span class="comment-action" onclick="likeComment('3')">👍 2</span>
+                        <span class="comment-action" onclick="replyComment('3')">回复</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = '交互原型-社区首页.html';
+        }
+
+        function goToProfile() {
+            alert('查看用户主页');
+        }
+
+        function filterByTag(tag) {
+            alert(`筛选话题：${tag}`);
+        }
+
+        function likePost() {
+            const btn = event.target;
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                alert('取消点赞');
+            } else {
+                btn.classList.add('active');
+                alert('点赞成功');
+            }
+        }
+
+        function commentPost() {
+            document.querySelector('.comment-input').focus();
+        }
+
+        function sharePost() {
+            alert('分享动态');
+        }
+
+        function submitComment() {
+            alert('发布评论');
+        }
+
+        function likeComment(id) {
+            alert(`点赞评论 ID: ${id}`);
+        }
+
+        function replyComment(id) {
+            alert(`回复评论 ID: ${id}`);
+        }
+    </script>
+</body>
+</html>
+

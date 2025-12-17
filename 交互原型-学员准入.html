@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学员准入 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        /* 进度条 */
+        .progress-bar {
+            height: 4px;
+            background: #f0f0f0;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.5s;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            padding: 24px;
+            background: #f9f9f9;
+        }
+
+        .step-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e0e0e0;
+            color: #999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 8px;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .step-item.active .step-number {
+            background: #667eea;
+            color: #fff;
+        }
+
+        .step-item.completed .step-number {
+            background: #52c41a;
+            color: #fff;
+        }
+
+        .step-label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .step-item.active .step-label {
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* 表单区域 */
+        .form-container {
+            padding: 48px;
+        }
+
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .form-subtitle {
+            color: #666;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 24px;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .form-label .required {
+            color: #ff4d4f;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .radio-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .radio-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .slider-group {
+            margin-top: 16px;
+        }
+
+        .slider-container {
+            position: relative;
+            margin-top: 8px;
+        }
+
+        .slider {
+            width: 100%;
+            height: 6px;
+            border-radius: 3px;
+            background: #f0f0f0;
+            outline: none;
+            -webkit-appearance: none;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #667eea;
+            cursor: pointer;
+            border: none;
+        }
+
+        .slider-value {
+            text-align: right;
+            margin-top: 8px;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* 按钮组 */
+        .button-group {
+            display: flex;
+            gap: 16px;
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            background: #d9d9d9;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        /* 权益卡片 */
+        .benefit-card {
+            background: #f6ffed;
+            border: 1px solid #b7eb8f;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+
+        .benefit-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #52c41a;
+        }
+
+        .benefit-list {
+            list-style: none;
+        }
+
+        .benefit-list li {
+            padding: 4px 0;
+            color: #666;
+        }
+
+        .benefit-list li:before {
+            content: "✓ ";
+            color: #52c41a;
+            font-weight: bold;
+        }
+
+        /* 确认页面 */
+        .preview-section {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .preview-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .preview-item:last-child {
+            border-bottom: none;
+        }
+
+        .preview-label {
+            color: #666;
+        }
+
+        .preview-value {
+            font-weight: bold;
+        }
+
+        /* 隐藏步骤 */
+        .step-content {
+            display: none;
+        }
+
+        .step-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 进度条 -->
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 25%;"></div>
+        </div>
+
+        <!-- 步骤指示器 -->
+        <div class="progress-steps">
+            <div class="step-item active" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-label">基础信息</div>
+            </div>
+            <div class="step-item" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-label">能力评估</div>
+            </div>
+            <div class="step-item" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-label">学习目标</div>
+            </div>
+            <div class="step-item" id="step4">
+                <div class="step-number">4</div>
+                <div class="step-label">确认提交</div>
+            </div>
+        </div>
+
+        <!-- 表单容器 -->
+        <div class="form-container">
+            <!-- 步骤1：基础信息 -->
+            <div class="step-content active" id="content1">
+                <div class="benefit-card">
+                    <div class="benefit-title">学员权益</div>
+                    <ul class="benefit-list">
+                        <li>系统课程</li>
+                        <li>政策解析</li>
+                        <li>训练工具</li>
+                        <li>线下实训机会</li>
+                        <li>微信豆奖励</li>
+                    </ul>
+                </div>
+
+                <h2 class="form-title">基础信息</h2>
+                <p class="form-subtitle">请如实填写您的基础信息，这将帮助我们更好地为您提供服务</p>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        是否开通微信小店 <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="shop" value="yes" class="radio-input" required>
+                            <span>是</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="shop" value="no" class="radio-input" required>
+                            <span>否</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        是否开通视频号 <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="video" value="yes" class="radio-input" required>
+                            <span>是</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="video" value="no" class="radio-input" required>
+                            <span>否</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        是否开通云服务小程序 <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="miniprogram" value="yes" class="radio-input" required>
+                            <span>是</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="miniprogram" value="no" class="radio-input" required>
+                            <span>否</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        当前运营情况 <span class="required">*</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="operation" value="store" class="checkbox-input">
+                            <span>有实体店</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="operation" value="online" class="checkbox-input">
+                            <span>纯线上</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="operation" value="other" class="checkbox-input">
+                            <span>其他</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-primary" onclick="nextStep(2)">下一步</button>
+                </div>
+            </div>
+
+            <!-- 步骤2：能力评估 -->
+            <div class="step-content" id="content2">
+                <h2 class="form-title">能力评估</h2>
+                <p class="form-subtitle">请根据您的实际情况，评估各项能力水平（0-100分）</p>
+
+                <div class="form-group">
+                    <label class="form-label">短视频拍摄能力</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="50" class="slider" id="videoSkill" oninput="updateSliderValue('videoSkill', 'videoValue')">
+                        <div class="slider-value" id="videoValue">50分</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">直播能力</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="30" class="slider" id="liveSkill" oninput="updateSliderValue('liveSkill', 'liveValue')">
+                        <div class="slider-value" id="liveValue">30分</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">内容创作能力</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="60" class="slider" id="contentSkill" oninput="updateSliderValue('contentSkill', 'contentValue')">
+                        <div class="slider-value" id="contentValue">60分</div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">数据分析能力</label>
+                    <div class="slider-container">
+                        <input type="range" min="0" max="100" value="40" class="slider" id="dataSkill" oninput="updateSliderValue('dataSkill', 'dataValue')">
+                        <div class="slider-value" id="dataValue">40分</div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(1)">上一步</button>
+                    <button class="btn btn-primary" onclick="nextStep(3)">下一步</button>
+                </div>
+            </div>
+
+            <!-- 步骤3：学习目标 -->
+            <div class="step-content" id="content3">
+                <h2 class="form-title">学习目标</h2>
+                <p class="form-subtitle">请告诉我们您的学习目标，我们将为您推荐合适的学习路径</p>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        希望提升的能力 <span class="required">*</span>
+                    </label>
+                    <div class="checkbox-group">
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="goals" value="content" class="checkbox-input">
+                            <span>内容创作能力</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="goals" value="live" class="checkbox-input">
+                            <span>直播能力</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="goals" value="operation" class="checkbox-input">
+                            <span>运营能力</span>
+                        </label>
+                        <label class="checkbox-item">
+                            <input type="checkbox" name="goals" value="data" class="checkbox-input">
+                            <span>数据分析能力</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">
+                        期望达到的等级 <span class="required">*</span>
+                    </label>
+                    <div class="radio-group">
+                        <label class="radio-item">
+                            <input type="radio" name="level" value="A" class="radio-input" required>
+                            <span>A级</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="level" value="B" class="radio-input" required>
+                            <span>B级</span>
+                        </label>
+                        <label class="radio-item">
+                            <input type="radio" name="level" value="C" class="radio-input" required>
+                            <span>C级</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(2)">上一步</button>
+                    <button class="btn btn-primary" onclick="nextStep(4)">下一步</button>
+                </div>
+            </div>
+
+            <!-- 步骤4：确认提交 -->
+            <div class="step-content" id="content4">
+                <h2 class="form-title">确认提交</h2>
+                <p class="form-subtitle">请确认您的信息无误后提交，我们将根据您的信息生成个性化能力模型</p>
+
+                <div class="preview-section">
+                    <div class="preview-item">
+                        <span class="preview-label">微信小店</span>
+                        <span class="preview-value" id="previewShop">-</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">视频号</span>
+                        <span class="preview-value" id="previewVideo">-</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">短视频能力</span>
+                        <span class="preview-value" id="previewVideoSkill">-</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">直播能力</span>
+                        <span class="preview-value" id="previewLiveSkill">-</span>
+                    </div>
+                    <div class="preview-item">
+                        <span class="preview-label">期望等级</span>
+                        <span class="preview-value" id="previewLevel">-</span>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button class="btn btn-secondary" onclick="prevStep(3)">上一步</button>
+                    <button class="btn btn-primary" onclick="submitForm()">确认提交</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStep = 1;
+
+        // 更新滑块值显示
+        function updateSliderValue(sliderId, valueId) {
+            const slider = document.getElementById(sliderId);
+            const valueDisplay = document.getElementById(valueId);
+            valueDisplay.textContent = slider.value + '分';
+        }
+
+        // 下一步
+        function nextStep(step) {
+            // 验证当前步骤
+            if (!validateStep(currentStep)) {
+                alert('请完成所有必填项');
+                return;
+            }
+
+            // 保存当前步骤数据
+            saveStepData(currentStep);
+
+            // 切换到下一步
+            if (step <= 4) {
+                showStep(step);
+            }
+        }
+
+        // 上一步
+        function prevStep(step) {
+            showStep(step);
+        }
+
+        // 显示步骤
+        function showStep(step) {
+            // 隐藏所有内容
+            document.querySelectorAll('.step-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 显示当前步骤内容
+            document.getElementById('content' + step).classList.add('active');
+
+            // 更新步骤指示器
+            document.querySelectorAll('.step-item').forEach((item, index) => {
+                item.classList.remove('active', 'completed');
+                if (index + 1 < step) {
+                    item.classList.add('completed');
+                } else if (index + 1 === step) {
+                    item.classList.add('active');
+                }
+            });
+
+            // 更新进度条
+            const progress = (step / 4) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+
+            currentStep = step;
+
+            // 如果是确认页，填充预览数据
+            if (step === 4) {
+                fillPreviewData();
+            }
+        }
+
+        // 验证步骤
+        function validateStep(step) {
+            if (step === 1) {
+                const shop = document.querySelector('input[name="shop"]:checked');
+                const video = document.querySelector('input[name="video"]:checked');
+                const miniprogram = document.querySelector('input[name="miniprogram"]:checked');
+                return shop && video && miniprogram;
+            }
+            return true;
+        }
+
+        // 保存步骤数据
+        function saveStepData(step) {
+            // 实际项目中应该保存到localStorage或发送到服务器
+            console.log('保存步骤' + step + '的数据');
+        }
+
+        // 填充预览数据
+        function fillPreviewData() {
+            const shop = document.querySelector('input[name="shop"]:checked');
+            const video = document.querySelector('input[name="video"]:checked');
+            const videoSkill = document.getElementById('videoSkill').value;
+            const liveSkill = document.getElementById('liveSkill').value;
+            const level = document.querySelector('input[name="level"]:checked');
+
+            document.getElementById('previewShop').textContent = shop ? (shop.value === 'yes' ? '已开通' : '未开通') : '-';
+            document.getElementById('previewVideo').textContent = video ? (video.value === 'yes' ? '已开通' : '未开通') : '-';
+            document.getElementById('previewVideoSkill').textContent = videoSkill + '分';
+            document.getElementById('previewLiveSkill').textContent = liveSkill + '分';
+            document.getElementById('previewLevel').textContent = level ? level.value + '级' : '-';
+        }
+
+        // 提交表单
+        function submitForm() {
+            // 显示提交中状态
+            const submitBtn = event.target;
+            submitBtn.disabled = true;
+            submitBtn.textContent = '提交中...';
+
+            // 模拟提交
+            setTimeout(() => {
+                alert('提交成功！系统正在为您生成能力模型...\n\n3秒后跳转到能力模型页面');
+                
+                // 实际项目中应该跳转到能力模型页面
+                setTimeout(() => {
+                    alert('跳转到能力模型页面（实际项目中会导航）');
+                }, 3000);
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+

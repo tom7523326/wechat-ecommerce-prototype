@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的学习路径 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item.active {
+            color: #07c160;
+            background: #e6f7f0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .diagnosis-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .weakness-list {
+            list-style: none;
+        }
+
+        .weakness-item {
+            padding: 12px;
+            background: #fff7e6;
+            border-left: 4px solid #faad14;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .weakness-icon {
+            font-size: 24px;
+        }
+
+        .weakness-content {
+            flex: 1;
+        }
+
+        .weakness-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .weakness-desc {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .path-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .path-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .path-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .path-progress {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        .steps-list {
+            list-style: none;
+            position: relative;
+            padding-left: 24px;
+        }
+
+        .steps-list::before {
+            content: '';
+            position: absolute;
+            left: 11px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e0e0e0;
+        }
+
+        .step-item {
+            position: relative;
+            padding-bottom: 24px;
+        }
+
+        .step-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .step-dot {
+            position: absolute;
+            left: -19px;
+            top: 4px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #fff;
+            border: 3px solid #e0e0e0;
+            z-index: 1;
+        }
+
+        .step-item.completed .step-dot {
+            background: #52c41a;
+            border-color: #52c41a;
+        }
+
+        .step-item.current .step-dot {
+            background: #faad14;
+            border-color: #faad14;
+            animation: pulse 2s infinite;
+        }
+
+        .step-item.pending .step-dot {
+            background: #fff;
+            border-color: #d9d9d9;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .step-content {
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .step-content:hover {
+            background: #f0f0f0;
+        }
+
+        .step-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .step-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .step-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .status-completed {
+            background: #f6ffed;
+            color: #52c41a;
+        }
+
+        .status-current {
+            background: #fff7e6;
+            color: #faad14;
+        }
+
+        .status-pending {
+            background: #fafafa;
+            color: #999;
+        }
+
+        .step-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+
+        .step-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            padding: 6px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #07c160;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #06ad56;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .milestone-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 8px;
+            padding: 24px;
+            color: #fff;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .milestone-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .milestone-icon {
+            font-size: 32px;
+        }
+
+        .milestone-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .milestone-rewards {
+            display: flex;
+            gap: 24px;
+            margin-top: 16px;
+        }
+
+        .reward-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .reward-icon {
+            font-size: 24px;
+        }
+
+        .reward-text {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">微信电商能力提升</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item" onclick="goToNav('知识图谱')">知识图谱</div>
+                <div class="nav-item" onclick="goToNav('我的名片')">我的名片</div>
+                <div class="nav-item" onclick="goToNav('学员中心')">学员中心</div>
+                <div class="nav-item active" onclick="goToNav('学习路径')">学习路径</div>
+                <div class="nav-item" onclick="goToNav('活动中心')">活动中心</div>
+                <div class="nav-item" onclick="goToNav('社区')">社区</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 能力诊断 -->
+        <div class="diagnosis-card">
+            <div class="card-title">能力诊断</div>
+            <p style="color: #666; margin-bottom: 16px;">根据您的知识图谱，发现以下薄弱项：</p>
+            <ul class="weakness-list">
+                <li class="weakness-item">
+                    <span class="weakness-icon">📺</span>
+                    <div class="weakness-content">
+                        <div class="weakness-title">开播能力（缺失）</div>
+                        <div class="weakness-desc">建议完成开播能力提升路径</div>
+                    </div>
+                </li>
+                <li class="weakness-item">
+                    <span class="weakness-icon">📊</span>
+                    <div class="weakness-content">
+                        <div class="weakness-title">数据分析能力（不足）</div>
+                        <div class="weakness-desc">建议完成数据分析入门课程</div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 推荐学习路径 -->
+        <div class="path-card">
+            <div class="path-header">
+                <div class="path-title">路径1：开播能力提升</div>
+                <div class="path-progress">
+                    <div class="progress-text">进度：40%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 40%;"></div>
+                    </div>
+                </div>
+            </div>
+            <ul class="steps-list">
+                <li class="step-item completed">
+                    <div class="step-dot"></div>
+                    <div class="step-content" onclick="goToStep('1')">
+                        <div class="step-header">
+                            <span class="step-name">1. 开播课程学习</span>
+                            <span class="step-status status-completed">已完成</span>
+                        </div>
+                        <div class="step-desc">学习开播基础知识和技巧，了解直播设备配置和场景搭建</div>
+                        <div class="step-actions">
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); reviewStep('1')">查看</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="step-item completed">
+                    <div class="step-dot"></div>
+                    <div class="step-content" onclick="goToStep('2')">
+                        <div class="step-header">
+                            <span class="step-name">2. 直播技巧训练</span>
+                            <span class="step-status status-completed">已完成</span>
+                        </div>
+                        <div class="step-desc">掌握直播话术、互动技巧和商品介绍方法</div>
+                        <div class="step-actions">
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); reviewStep('2')">查看</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="step-item current">
+                    <div class="step-dot"></div>
+                    <div class="step-content" onclick="goToStep('3')">
+                        <div class="step-header">
+                            <span class="step-name">3. AI直播仓演练</span>
+                            <span class="step-status status-current">进行中</span>
+                        </div>
+                        <div class="step-desc">在AI直播仓中进行模拟直播练习，熟悉直播流程</div>
+                        <div class="step-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); continueStep('3')">继续</button>
+                        </div>
+                    </div>
+                </li>
+                <li class="step-item pending">
+                    <div class="step-dot"></div>
+                    <div class="step-content" onclick="goToStep('4')">
+                        <div class="step-header">
+                            <span class="step-name">4. 首场真实直播</span>
+                            <span class="step-status status-pending">未开始</span>
+                        </div>
+                        <div class="step-desc">完成首场真实直播，时长不少于30分钟，并提交直播数据</div>
+                        <div class="step-actions">
+                            <button class="btn btn-secondary" onclick="event.stopPropagation(); viewStep('4')">查看要求</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- 学习里程碑 -->
+        <div class="milestone-card">
+            <div class="milestone-header">
+                <span class="milestone-icon">🎯</span>
+                <span class="milestone-title">完成开播能力路径</span>
+            </div>
+            <p style="opacity: 0.9; margin-bottom: 16px;">完成此路径后，您将解锁以下奖励：</p>
+            <div class="milestone-rewards">
+                <div class="reward-item">
+                    <span class="reward-icon">🔓</span>
+                    <span class="reward-text">解锁A级申请资格</span>
+                </div>
+                <div class="reward-item">
+                    <span class="reward-icon">💰</span>
+                    <span class="reward-text">100微信豆</span>
+                </div>
+                <div class="reward-item">
+                    <span class="reward-icon">📜</span>
+                    <span class="reward-text">能力认证证书</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他推荐路径 -->
+        <div class="path-card">
+            <div class="path-header">
+                <div class="path-title">路径2：数据分析能力提升</div>
+                <div class="path-progress">
+                    <div class="progress-text">进度：0%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 0%;"></div>
+                    </div>
+                </div>
+            </div>
+            <ul class="steps-list">
+                <li class="step-item pending">
+                    <div class="step-dot"></div>
+                    <div class="step-content" onclick="goToStep('5')">
+                        <div class="step-header">
+                            <span class="step-name">1. 数据分析入门课程</span>
+                            <span class="step-status status-pending">未开始</span>
+                        </div>
+                        <div class="step-desc">学习数据分析基础概念和常用工具</div>
+                        <div class="step-actions">
+                            <button class="btn btn-primary" onclick="event.stopPropagation(); startPath('2')">开始学习</button>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // 导航跳转
+        const navRoutes = {
+            '首页': '交互原型-首页.html',
+            '知识图谱': '交互原型-知识图谱.html',
+            '我的名片': '交互原型-数字化名片.html',
+            '学员中心': '交互原型-学员等级.html',
+            '学习路径': '交互原型-学习路径.html',
+            '活动中心': '交互原型-活动中心.html',
+            '社区': '交互原型-社区首页.html'
+        };
+
+        function goToHome() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function goToNav(navName) {
+            if (navRoutes[navName]) {
+                window.location.href = navRoutes[navName];
+            }
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function goToStep(stepId) {
+            alert(`跳转到步骤：${stepId}`);
+        }
+
+        function continueStep(stepId) {
+            alert(`继续步骤：${stepId}`);
+        }
+
+        function reviewStep(stepId) {
+            alert(`查看步骤：${stepId}`);
+        }
+
+        function viewStep(stepId) {
+            alert(`查看步骤要求：${stepId}`);
+        }
+
+        function startPath(pathId) {
+            alert(`开始学习路径：${pathId}`);
+        }
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>课程中心 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .search-bar {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .search-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 16px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .search-btn {
+            padding: 12px 24px;
+            background: #07c160;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .search-btn:hover {
+            background: #06ad56;
+        }
+
+        .filter-tags {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tag {
+            padding: 6px 16px;
+            border: 1px solid #d9d9d9;
+            border-radius: 16px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-tag:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filter-tag.active {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+
+        .course-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .course-card {
+            background: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .course-cover {
+            width: 100%;
+            height: 160px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 48px;
+            position: relative;
+        }
+
+        .course-status {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+        }
+
+        .course-content {
+            padding: 16px;
+        }
+
+        .course-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .course-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 12px;
+        }
+
+        .course-progress {
+            margin-bottom: 12px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 4px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+            transition: width 0.5s;
+        }
+
+        .progress-text {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .course-action {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #07c160;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #06ad56;
+        }
+
+        .btn-secondary {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 32px;
+        }
+
+        .page-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid #d9d9d9;
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .page-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .page-btn.active {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="logo">课程中心</div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="search-bar">
+            <div class="search-input-group">
+                <input type="text" class="search-input" placeholder="🔍 搜索课程、文章、工具...">
+                <button class="search-btn" onclick="search()">搜索</button>
+            </div>
+            <div class="filter-tags">
+                <div class="filter-tag active" onclick="filterByCategory('all')">全部</div>
+                <div class="filter-tag" onclick="filterByCategory('content')">内容创作</div>
+                <div class="filter-tag" onclick="filterByCategory('live')">直播能力</div>
+                <div class="filter-tag" onclick="filterByCategory('operation')">运营能力</div>
+                <div class="filter-tag" onclick="filterByCategory('data')">数据分析</div>
+            </div>
+            <div class="filter-tags" style="margin-top: 12px;">
+                <div class="filter-tag" onclick="filterByDifficulty('all')">全部难度</div>
+                <div class="filter-tag" onclick="filterByDifficulty('beginner')">初级</div>
+                <div class="filter-tag" onclick="filterByDifficulty('intermediate')">中级</div>
+                <div class="filter-tag" onclick="filterByDifficulty('advanced')">高级</div>
+            </div>
+            <div class="filter-tags" style="margin-top: 12px;">
+                <div class="filter-tag" onclick="filterByStatus('all')">全部状态</div>
+                <div class="filter-tag" onclick="filterByStatus('not-started')">未开始</div>
+                <div class="filter-tag" onclick="filterByStatus('learning')">学习中</div>
+                <div class="filter-tag" onclick="filterByStatus('completed')">已完成</div>
+            </div>
+        </div>
+
+        <div class="course-grid">
+            <div class="course-card" onclick="goToCourse('1')">
+                <div class="course-cover">
+                    📹
+                    <div class="course-status">进行中</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-title">微信小店运营实战</div>
+                    <div class="course-meta">
+                        <span>初级</span>
+                        <span>2小时</span>
+                        <span>1,234人学习</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 60%;"></div>
+                        </div>
+                        <div class="progress-text">已完成 60%</div>
+                    </div>
+                    <div class="course-action">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); continueLearning('1')">继续学习</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="goToCourse('2')">
+                <div class="course-cover">
+                    🎥
+                    <div class="course-status">未开始</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-title">直播带货技巧全攻略</div>
+                    <div class="course-meta">
+                        <span>中级</span>
+                        <span>3小时</span>
+                        <span>856人学习</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">未开始</div>
+                    </div>
+                    <div class="course-action">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); startLearning('2')">开始学习</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="goToCourse('3')">
+                <div class="course-cover">
+                    📊
+                    <div class="course-status">已完成</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-title">数据分析入门</div>
+                    <div class="course-meta">
+                        <span>初级</span>
+                        <span>1.5小时</span>
+                        <span>2,456人学习</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 100%;"></div>
+                        </div>
+                        <div class="progress-text">已完成 100%</div>
+                    </div>
+                    <div class="course-action">
+                        <button class="btn btn-secondary" onclick="event.stopPropagation(); reviewCourse('3')">查看证书</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="goToCourse('4')">
+                <div class="course-cover">
+                    ✍️
+                    <div class="course-status">进行中</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-title">短视频拍摄与剪辑</div>
+                    <div class="course-meta">
+                        <span>中级</span>
+                        <span>4小时</span>
+                        <span>1,789人学习</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 30%;"></div>
+                        </div>
+                        <div class="progress-text">已完成 30%</div>
+                    </div>
+                    <div class="course-action">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); continueLearning('4')">继续学习</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="goToCourse('5')">
+                <div class="course-cover">
+                    🎬
+                    <div class="course-status">未开始</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-title">内容策划与运营</div>
+                    <div class="course-meta">
+                        <span>高级</span>
+                        <span>5小时</span>
+                        <span>623人学习</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">未开始</div>
+                    </div>
+                    <div class="course-action">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); startLearning('5')">开始学习</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="course-card" onclick="goToCourse('6')">
+                <div class="course-cover">
+                    💬
+                    <div class="course-status">未开始</div>
+                </div>
+                <div class="course-content">
+                    <div class="course-title">直播互动技巧</div>
+                    <div class="course-meta">
+                        <span>中级</span>
+                        <span>2.5小时</span>
+                        <span>945人学习</span>
+                    </div>
+                    <div class="course-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 0%;"></div>
+                        </div>
+                        <div class="progress-text">未开始</div>
+                    </div>
+                    <div class="course-action">
+                        <button class="btn btn-primary" onclick="event.stopPropagation(); startLearning('6')">开始学习</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="pagination">
+            <div class="page-btn" onclick="prevPage()">‹</div>
+            <div class="page-btn active">1</div>
+            <div class="page-btn" onclick="goToPage(2)">2</div>
+            <div class="page-btn" onclick="goToPage(3)">3</div>
+            <div class="page-btn" onclick="nextPage()">›</div>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function goToProfile() {
+            alert('跳转到个人中心');
+        }
+
+        function search() {
+            const keyword = document.querySelector('.search-input').value;
+            alert(`搜索：${keyword}`);
+        }
+
+        function filterByCategory(category) {
+            document.querySelectorAll('.filter-tags .filter-tag').forEach(tag => {
+                if (tag.textContent.includes('内容') || tag.textContent.includes('直播') || tag.textContent.includes('运营') || tag.textContent.includes('数据') || tag.textContent.includes('全部')) {
+                    tag.classList.remove('active');
+                }
+            });
+            event.target.classList.add('active');
+            alert(`筛选分类：${category}`);
+        }
+
+        function filterByDifficulty(difficulty) {
+            alert(`筛选难度：${difficulty}`);
+        }
+
+        function filterByStatus(status) {
+            alert(`筛选状态：${status}`);
+        }
+
+        function goToCourse(id) {
+            window.location.href = `交互原型-课程详情.html?id=${id}`;
+        }
+
+        function continueLearning(id) {
+            alert(`继续学习课程 ID: ${id}`);
+        }
+
+        function startLearning(id) {
+            alert(`开始学习课程 ID: ${id}`);
+        }
+
+        function reviewCourse(id) {
+            alert(`查看课程证书 ID: ${id}`);
+        }
+
+        function prevPage() {
+            alert('上一页');
+        }
+
+        function nextPage() {
+            alert('下一页');
+        }
+
+        function goToPage(page) {
+            document.querySelectorAll('.page-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            alert(`跳转到第 ${page} 页`);
+        }
+    </script>
+</body>
+</html>
+

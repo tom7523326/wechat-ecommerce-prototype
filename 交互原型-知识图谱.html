@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>知识图谱 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item.active {
+            color: #07c160;
+            background: #e6f7f0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 64px);
+        }
+
+        /* 左侧筛选栏 */
+        .sidebar {
+            width: 200px;
+            background: #fff;
+            padding: 24px;
+            box-shadow: 2px 0 8px rgba(0,0,0,0.1);
+        }
+
+        .filter-title {
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .filter-item {
+            padding: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: all 0.3s;
+        }
+
+        .filter-item:hover {
+            background: #f5f5f5;
+        }
+
+        .filter-item.active {
+            background: #e6f7f0;
+            color: #07c160;
+            font-weight: bold;
+        }
+
+        /* 中间图谱区域 */
+        .graph-area {
+            flex: 1;
+            position: relative;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .graph-controls {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+            display: flex;
+            gap: 8px;
+        }
+
+        .control-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #fff;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .control-btn:hover {
+            background: #f5f5f5;
+        }
+
+        .graph-canvas {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        /* 知识节点样式 */
+        .knowledge-node {
+            position: absolute;
+            width: 120px;
+            height: 80px;
+            background: #fff;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .knowledge-node:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+            z-index: 5;
+        }
+
+        .knowledge-node.mastered {
+            border-color: #52c41a;
+            background: #f6ffed;
+        }
+
+        .knowledge-node.learning {
+            border-color: #faad14;
+            background: #fffbe6;
+        }
+
+        .knowledge-node.not-started {
+            border-color: #d9d9d9;
+            background: #fafafa;
+        }
+
+        .node-title {
+            font-size: 12px;
+            font-weight: bold;
+            text-align: center;
+            padding: 4px 8px;
+        }
+
+        .node-status {
+            font-size: 10px;
+            color: #999;
+            margin-top: 4px;
+        }
+
+        /* 连接线 */
+        .connection-line {
+            position: absolute;
+            height: 2px;
+            background: #d9d9d9;
+            transform-origin: left center;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* 右侧详情面板 */
+        .detail-panel {
+            width: 320px;
+            background: #fff;
+            box-shadow: -2px 0 8px rgba(0,0,0,0.1);
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .panel-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .close-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-bottom: 16px;
+        }
+
+        .status-badge.mastered {
+            background: #f6ffed;
+            color: #52c41a;
+        }
+
+        .status-badge.learning {
+            background: #fffbe6;
+            color: #faad14;
+        }
+
+        .status-badge.not-started {
+            background: #fafafa;
+            color: #999;
+        }
+
+        .progress-section {
+            margin-bottom: 24px;
+        }
+
+        .progress-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 8px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        .related-section {
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .related-item {
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .related-item:hover {
+            background: #f0f0f0;
+        }
+
+        .item-title {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .item-meta {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            background: #07c160;
+            color: #fff;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn:hover {
+            background: #06ad56;
+        }
+
+        .legend {
+            position: absolute;
+            bottom: 16px;
+            left: 16px;
+            background: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            font-size: 12px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">微信电商能力提升</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item active" onclick="goToNav('知识图谱')">知识图谱</div>
+                <div class="nav-item" onclick="goToNav('我的名片')">我的名片</div>
+                <div class="nav-item" onclick="goToNav('学员中心')">学员中心</div>
+                <div class="nav-item" onclick="goToNav('学习路径')">学习路径</div>
+                <div class="nav-item" onclick="goToNav('活动中心')">活动中心</div>
+                <div class="nav-item" onclick="goToNav('社区')">社区</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 左侧筛选栏 -->
+        <div class="sidebar">
+            <div class="filter-title">筛选</div>
+            <div class="filter-item active" onclick="filterNodes('all')">全部</div>
+            <div class="filter-item" onclick="filterNodes('mastered')">已掌握</div>
+            <div class="filter-item" onclick="filterNodes('learning')">学习中</div>
+            <div class="filter-item" onclick="filterNodes('not-started')">未开始</div>
+        </div>
+
+        <!-- 中间图谱区域 -->
+        <div class="graph-area">
+            <div class="graph-controls">
+                <button class="control-btn" onclick="resetView()" title="重置视图">⌂</button>
+                <button class="control-btn" onclick="zoomIn()" title="放大">+</button>
+                <button class="control-btn" onclick="zoomOut()" title="缩小">-</button>
+            </div>
+
+            <div class="graph-canvas" id="graphCanvas">
+                <!-- 中心节点 -->
+                <div class="knowledge-node mastered" style="top: 50%; left: 50%; transform: translate(-50%, -50%);" onclick="selectNode('core')">
+                    <div class="node-title">微信电商<br>核心能力</div>
+                    <div class="node-status">已掌握</div>
+                </div>
+
+                <!-- 一级节点 -->
+                <div class="knowledge-node mastered" style="top: 20%; left: 30%;" onclick="selectNode('content')">
+                    <div class="node-title">内容创作</div>
+                    <div class="node-status">已掌握</div>
+                </div>
+
+                <div class="knowledge-node learning" style="top: 20%; left: 70%;" onclick="selectNode('live')">
+                    <div class="node-title">直播能力</div>
+                    <div class="node-status">学习中</div>
+                </div>
+
+                <div class="knowledge-node not-started" style="top: 80%; left: 30%;" onclick="selectNode('operation')">
+                    <div class="node-title">运营能力</div>
+                    <div class="node-status">未开始</div>
+                </div>
+
+                <div class="knowledge-node learning" style="top: 80%; left: 70%;" onclick="selectNode('data')">
+                    <div class="node-title">数据分析</div>
+                    <div class="node-status">学习中</div>
+                </div>
+
+                <!-- 二级节点 -->
+                <div class="knowledge-node mastered" style="top: 10%; left: 15%;" onclick="selectNode('video')">
+                    <div class="node-title">短视频</div>
+                    <div class="node-status">已掌握</div>
+                </div>
+
+                <div class="knowledge-node mastered" style="top: 10%; left: 45%;" onclick="selectNode('article')">
+                    <div class="node-title">图文创作</div>
+                    <div class="node-status">已掌握</div>
+                </div>
+
+                <div class="knowledge-node learning" style="top: 10%; left: 55%;" onclick="selectNode('broadcast')">
+                    <div class="node-title">开播能力</div>
+                    <div class="node-status">学习中</div>
+                </div>
+
+                <div class="knowledge-node not-started" style="top: 10%; left: 85%;" onclick="selectNode('interaction')">
+                    <div class="node-title">互动技巧</div>
+                    <div class="node-status">未开始</div>
+                </div>
+            </div>
+
+            <!-- 图例 -->
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f6ffed; border: 2px solid #52c41a;"></div>
+                    <span>已掌握</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fffbe6; border: 2px solid #faad14;"></div>
+                    <span>学习中</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fafafa; border: 2px solid #d9d9d9;"></div>
+                    <span>未开始</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧详情面板 -->
+        <div class="detail-panel" id="detailPanel" style="display: none;">
+            <div class="panel-header">
+                <div class="panel-title" id="panelTitle">知识点详情</div>
+                <button class="close-btn" onclick="closePanel()">×</button>
+            </div>
+            <div id="panelContent">
+                <!-- 内容将通过JavaScript动态填充 -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 节点数据
+        const nodeData = {
+            'core': {
+                title: '微信电商核心能力',
+                status: 'mastered',
+                progress: 100,
+                description: '微信电商运营的核心能力体系',
+                courses: [
+                    { title: '微信电商入门', duration: '2小时', type: '课程' },
+                    { title: '微信生态解析', duration: '1.5小时', type: '课程' }
+                ],
+                articles: [
+                    { title: '微信电商发展趋势', author: '官方', type: '文章' },
+                    { title: '成功案例分享', author: 'S级学员', type: '文章' }
+                ],
+                tools: [
+                    { title: '能力自测工具', type: '工具' }
+                ]
+            },
+            'content': {
+                title: '内容创作',
+                status: 'mastered',
+                progress: 100,
+                description: '掌握短视频、图文等内容创作能力',
+                courses: [
+                    { title: '短视频拍摄技巧', duration: '3小时', type: '课程' },
+                    { title: '图文内容策划', duration: '2小时', type: '课程' }
+                ],
+                articles: [
+                    { title: '10万+爆款内容解析', author: '内容专家', type: '文章' }
+                ],
+                tools: [
+                    { title: '内容创作模板', type: '工具' }
+                ]
+            },
+            'live': {
+                title: '直播能力',
+                status: 'learning',
+                progress: 60,
+                description: '提升直播带货和互动能力',
+                courses: [
+                    { title: '直播带货实战', duration: '4小时', type: '课程' },
+                    { title: '直播互动技巧', duration: '2小时', type: '课程' }
+                ],
+                articles: [
+                    { title: '直播话术大全', author: '直播达人', type: '文章' }
+                ],
+                tools: [
+                    { title: 'AI直播仓', type: '工具' }
+                ]
+            },
+            'broadcast': {
+                title: '开播能力',
+                status: 'learning',
+                progress: 40,
+                description: '掌握直播开播的基础技能',
+                courses: [
+                    { title: '开播准备', duration: '1小时', type: '课程' },
+                    { title: '设备调试', duration: '0.5小时', type: '课程' }
+                ],
+                articles: [
+                    { title: '新手开播指南', author: '官方', type: '文章' }
+                ],
+                tools: [
+                    { title: '开播检查清单', type: '工具' }
+                ]
+            }
+        };
+
+        // 选择节点
+        function selectNode(nodeId) {
+            const data = nodeData[nodeId] || nodeData['core'];
+            const panel = document.getElementById('detailPanel');
+            const panelTitle = document.getElementById('panelTitle');
+            const panelContent = document.getElementById('panelContent');
+
+            panelTitle.textContent = data.title;
+            
+            const statusText = {
+                'mastered': '已掌握',
+                'learning': '学习中',
+                'not-started': '未开始'
+            };
+
+            panelContent.innerHTML = `
+                <div class="status-badge ${data.status}">${statusText[data.status]}</div>
+                <p style="margin-bottom: 24px; color: #666;">${data.description}</p>
+                
+                <div class="progress-section">
+                    <div class="progress-label">掌握程度：${data.progress}%</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${data.progress}%;"></div>
+                    </div>
+                </div>
+
+                <div class="related-section">
+                    <div class="section-title">关联课程 (${data.courses.length})</div>
+                    ${data.courses.map(course => `
+                        <div class="related-item" onclick="goToCourse('${course.title}')">
+                            <div class="item-title">${course.title}</div>
+                            <div class="item-meta">${course.duration} · ${course.type}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="related-section">
+                    <div class="section-title">关联文章 (${data.articles.length})</div>
+                    ${data.articles.map(article => `
+                        <div class="related-item" onclick="goToArticle('${article.title}')">
+                            <div class="item-title">${article.title}</div>
+                            <div class="item-meta">${article.author} · ${article.type}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <div class="related-section">
+                    <div class="section-title">实训工具</div>
+                    ${data.tools.map(tool => `
+                        <div class="related-item" onclick="goToTool('${tool.title}')">
+                            <div class="item-title">${tool.title}</div>
+                            <div class="item-meta">${tool.type}</div>
+                        </div>
+                    `).join('')}
+                </div>
+
+                <button class="btn" onclick="startLearning('${nodeId}')" style="margin-top: 24px;">
+                    开始学习
+                </button>
+            `;
+
+            panel.style.display = 'block';
+        }
+
+        // 关闭面板
+        function closePanel() {
+            document.getElementById('detailPanel').style.display = 'none';
+        }
+
+        // 筛选节点
+        function filterNodes(type) {
+            document.querySelectorAll('.filter-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            const nodes = document.querySelectorAll('.knowledge-node');
+            nodes.forEach(node => {
+                if (type === 'all') {
+                    node.style.display = 'flex';
+                } else {
+                    if (node.classList.contains(type)) {
+                        node.style.display = 'flex';
+                    } else {
+                        node.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        // 视图控制
+        function resetView() {
+            alert('重置视图（实际项目中会重置图谱位置和缩放）');
+        }
+
+        function zoomIn() {
+            alert('放大视图');
+        }
+
+        function zoomOut() {
+            alert('缩小视图');
+        }
+
+        // 跳转函数
+        function goToCourse(title) {
+            alert(`跳转到课程：${title}`);
+        }
+
+        function goToArticle(title) {
+            alert(`跳转到文章：${title}`);
+        }
+
+        function goToTool(title) {
+            alert(`打开工具：${title}`);
+        }
+
+        function startLearning(nodeId) {
+            alert(`开始学习：${nodeData[nodeId].title}`);
+        }
+
+        // 导航跳转
+        const navRoutes = {
+            '首页': '交互原型-首页.html',
+            '知识图谱': '交互原型-知识图谱.html',
+            '我的名片': '交互原型-数字化名片.html',
+            '学员中心': '交互原型-学员等级.html',
+            '学习路径': '交互原型-学习路径.html',
+            '活动中心': '交互原型-活动中心.html',
+            '社区': '交互原型-社区首页.html'
+        };
+
+        function goToHome() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function goToNav(navName) {
+            if (navRoutes[navName]) {
+                window.location.href = navRoutes[navName];
+            }
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        // 默认显示中心节点详情
+        window.addEventListener('load', function() {
+            selectNode('core');
+        });
+    </script>
+</body>
+</html>
+

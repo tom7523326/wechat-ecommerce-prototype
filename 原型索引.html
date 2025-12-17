@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信电商能力提升 - 原型索引</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+
+        .prototype-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .prototype-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .prototype-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.3);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .card-status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-completed {
+            background: #f6ffed;
+            color: #52c41a;
+        }
+
+        .status-pending {
+            background: #fff7e6;
+            color: #faad14;
+        }
+
+        .doc-section {
+            background: #fff;
+            border-radius: 12px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            margin-bottom: 24px;
+        }
+
+        .doc-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            color: #333;
+        }
+
+        .doc-list {
+            list-style: none;
+        }
+
+        .doc-item {
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .doc-item:last-child {
+            border-bottom: none;
+        }
+
+        .doc-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .doc-link:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .footer {
+            text-align: center;
+            color: #fff;
+            opacity: 0.8;
+            margin-top: 48px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>微信电商能力提升平台</h1>
+            <p>产品原型索引</p>
+        </div>
+
+        <!-- 原型页面 -->
+        <div class="prototype-grid">
+            <a href="交互原型-首页.html" class="prototype-card">
+                <div class="card-icon" style="background: #e6f7ff; color: #1890ff;">🏠</div>
+                <div class="card-title">首页</div>
+                <div class="card-desc">数据概览、学习进度、能力雷达图、最新动态</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-知识图谱.html" class="prototype-card">
+                <div class="card-icon" style="background: #f6ffed; color: #52c41a;">🗺️</div>
+                <div class="card-title">知识图谱</div>
+                <div class="card-desc">可视化知识图谱、节点筛选、关联课程文章</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-学员准入.html" class="prototype-card">
+                <div class="card-icon" style="background: #fff7e6; color: #faad14;">📝</div>
+                <div class="card-title">学员准入</div>
+                <div class="card-desc">分步骤表单、能力评估、信息确认</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-课程中心.html" class="prototype-card">
+                <div class="card-icon" style="background: #f9f0ff; color: #722ed1;">📚</div>
+                <div class="card-title">课程中心</div>
+                <div class="card-desc">课程列表、筛选搜索、学习进度</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-课程详情.html" class="prototype-card">
+                <div class="card-icon" style="background: #e6f7ff; color: #1890ff;">📖</div>
+                <div class="card-title">课程详情</div>
+                <div class="card-desc">课程目录、学习进度、讲师信息</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-数字化名片.html" class="prototype-card">
+                <div class="card-icon" style="background: #fff0f6; color: #eb2f96;">👤</div>
+                <div class="card-title">数字化名片</div>
+                <div class="card-desc">能力模型、服务需求、数据展示</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-学员等级.html" class="prototype-card">
+                <div class="card-icon" style="background: #e6f7ff; color: #1890ff;">⭐</div>
+                <div class="card-title">学员等级</div>
+                <div class="card-desc">等级体系、权益义务、晋级申请</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-学习路径.html" class="prototype-card">
+                <div class="card-icon" style="background: #f6ffed; color: #52c41a;">🛤️</div>
+                <div class="card-title">学习路径</div>
+                <div class="card-desc">个性化路径、能力诊断、里程碑</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-活动中心.html" class="prototype-card">
+                <div class="card-icon" style="background: #fff7e6; color: #faad14;">🎯</div>
+                <div class="card-title">活动中心</div>
+                <div class="card-desc">运营活动、政策解读、经验分享</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-活动详情.html" class="prototype-card">
+                <div class="card-icon" style="background: #fff7e6; color: #faad14;">📋</div>
+                <div class="card-title">活动详情</div>
+                <div class="card-desc">活动介绍、流程安排、报名参与</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-社区首页.html" class="prototype-card">
+                <div class="card-icon" style="background: #f9f0ff; color: #722ed1;">💬</div>
+                <div class="card-title">交流社区</div>
+                <div class="card-desc">动态发布、问答互助、经验交流</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-动态详情.html" class="prototype-card">
+                <div class="card-icon" style="background: #f9f0ff; color: #722ed1;">📝</div>
+                <div class="card-title">动态详情</div>
+                <div class="card-desc">动态内容、评论互动、点赞分享</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-个人中心.html" class="prototype-card">
+                <div class="card-icon" style="background: #e6f7ff; color: #1890ff;">👤</div>
+                <div class="card-title">个人中心</div>
+                <div class="card-desc">个人资料、我的课程、系统设置</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-数据统计.html" class="prototype-card">
+                <div class="card-icon" style="background: #f6ffed; color: #52c41a;">📊</div>
+                <div class="card-title">数据统计</div>
+                <div class="card-desc">数据概览、趋势图表、详细报表</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+
+            <a href="交互原型-消息中心.html" class="prototype-card">
+                <div class="card-icon" style="background: #fff0f6; color: #eb2f96;">🔔</div>
+                <div class="card-title">消息中心</div>
+                <div class="card-desc">系统通知、活动消息、互动提醒</div>
+                <span class="card-status status-completed">已完成</span>
+            </a>
+        </div>
+
+        <!-- 文档链接 -->
+        <div class="doc-section">
+            <div class="doc-title">📄 相关文档</div>
+            <ul class="doc-list">
+                <li class="doc-item">
+                    <a href="产品原型规划文档.md" class="doc-link" target="_blank">
+                        📋 产品原型规划文档
+                        <span style="color: #999; font-size: 12px;">（完整的产品设计文档）</span>
+                    </a>
+                </li>
+                <li class="doc-item">
+                    <a href="README.md" class="doc-link" target="_blank">
+                        📖 README.md
+                        <span style="color: #999; font-size: 12px;">（项目说明文档）</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="footer">
+            <p>微信电商能力提升平台 · 产品原型 v1.0</p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的数字化名片 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item.active {
+            color: #07c160;
+            background: #e6f7f0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .card-preview {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 32px;
+            color: #fff;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 24px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .user-details h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .user-level {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .card-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-white {
+            background: rgba(255,255,255,0.2);
+            color: #fff;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn-white:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+        }
+
+        .main-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .edit-btn {
+            padding: 4px 12px;
+            background: #f5f5f5;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .edit-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .radar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+            position: relative;
+        }
+
+        .radar-chart {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+
+        .radar-axis {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+        }
+
+        .radar-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .radar-label {
+            position: absolute;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .ability-list {
+            list-style: none;
+        }
+
+        .ability-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .ability-item:last-child {
+            border-bottom: none;
+        }
+
+        .ability-name {
+            font-weight: bold;
+        }
+
+        .ability-progress {
+            flex: 1;
+            margin: 0 16px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #f0f0f0;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 3px;
+        }
+
+        .ability-value {
+            color: #667eea;
+            font-weight: bold;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .service-list, .need-list {
+            list-style: none;
+        }
+
+        .service-item, .need-item {
+            padding: 12px;
+            background: #f9f9f9;
+            border-radius: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #e6f7f0;
+            color: #07c160;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 12px;
+            border: 1px dashed #d9d9d9;
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .add-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .sidebar-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .knowledge-stats {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .knowledge-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+        }
+
+        .knowledge-label {
+            color: #666;
+        }
+
+        .knowledge-value {
+            font-weight: bold;
+            color: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">微信电商能力提升</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item" onclick="goToNav('知识图谱')">知识图谱</div>
+                <div class="nav-item active" onclick="goToNav('我的名片')">我的名片</div>
+                <div class="nav-item" onclick="goToNav('学员中心')">学员中心</div>
+                <div class="nav-item" onclick="goToNav('学习路径')">学习路径</div>
+                <div class="nav-item" onclick="goToNav('活动中心')">活动中心</div>
+                <div class="nav-item" onclick="goToNav('社区')">社区</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- 名片预览 -->
+        <div class="card-preview">
+            <div class="card-header">
+                <div class="user-info">
+                    <div class="user-avatar"></div>
+                    <div class="user-details">
+                        <h2>张同学</h2>
+                        <span class="user-level">B级学员</span>
+                    </div>
+                </div>
+                <div class="card-actions">
+                    <button class="btn btn-white" onclick="editCard()">编辑</button>
+                    <button class="btn btn-white" onclick="shareCard()">分享</button>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">10.2万</div>
+                    <div class="stat-label">粉丝数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">50.8万</div>
+                <div class="stat-label">小店GMV/月</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">500</div>
+                    <div class="stat-label">微信豆</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div>
+                <!-- 能力模型 -->
+                <div class="main-card">
+                    <div class="card-title">
+                        <span>能力模型</span>
+                        <button class="edit-btn" onclick="editAbility()">编辑</button>
+                    </div>
+                    <div class="radar-container">
+                        <div class="radar-chart">
+                            <div class="radar-axis"></div>
+                            <div class="radar-point" style="top: 20%; left: 50%;" onclick="showAbilityDetail('content')"></div>
+                            <div class="radar-label" style="top: 10%; left: 50%; transform: translateX(-50%);">内容创作</div>
+                            <div class="radar-point" style="top: 50%; left: 80%;" onclick="showAbilityDetail('live')"></div>
+                            <div class="radar-label" style="top: 50%; left: 90%;">直播能力</div>
+                            <div class="radar-point" style="top: 80%; left: 50%;" onclick="showAbilityDetail('data')"></div>
+                            <div class="radar-label" style="top: 90%; left: 50%; transform: translateX(-50%);">数据分析</div>
+                            <div class="radar-point" style="top: 50%; left: 20%;" onclick="showAbilityDetail('operation')"></div>
+                            <div class="radar-label" style="top: 50%; left: 5%;">运营能力</div>
+                        </div>
+                    </div>
+                    <ul class="ability-list">
+                        <li class="ability-item">
+                            <span class="ability-name">内容创作</span>
+                            <div class="ability-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 85%;"></div>
+                                </div>
+                            </div>
+                            <span class="ability-value">85%</span>
+                        </li>
+                        <li class="ability-item">
+                            <span class="ability-name">直播能力</span>
+                            <div class="ability-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 60%;"></div>
+                                </div>
+                            </div>
+                            <span class="ability-value">60%</span>
+                        </li>
+                        <li class="ability-item">
+                            <span class="ability-name">数据分析</span>
+                            <div class="ability-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 40%;"></div>
+                                </div>
+                            </div>
+                            <span class="ability-value">40%</span>
+                        </li>
+                        <li class="ability-item">
+                            <span class="ability-name">运营能力</span>
+                            <div class="ability-progress">
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 70%;"></div>
+                                </div>
+                            </div>
+                            <span class="ability-value">70%</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- 可提供服务 -->
+                <div class="main-card">
+                    <div class="card-title">
+                        <span>可提供服务</span>
+                        <button class="edit-btn" onclick="editServices()">编辑</button>
+                    </div>
+                    <ul class="service-list">
+                        <li class="service-item">
+                            <span>农产品销售</span>
+                            <span class="tag">已认证</span>
+                        </li>
+                        <li class="service-item">
+                            <span>直播带货</span>
+                            <span class="tag">已认证</span>
+                        </li>
+                        <li class="service-item">
+                            <span>内容创作指导</span>
+                            <span class="tag">待认证</span>
+                        </li>
+                    </ul>
+                    <button class="add-btn" onclick="addService()">+ 添加服务</button>
+                </div>
+
+                <!-- 需求 -->
+                <div class="main-card">
+                    <div class="card-title">
+                        <span>我的需求</span>
+                        <button class="edit-btn" onclick="editNeeds()">编辑</button>
+                    </div>
+                    <ul class="need-list">
+                        <li class="need-item">
+                            <span>寻找达人帮忙带货</span>
+                            <button class="edit-btn" onclick="editNeed(1)">编辑</button>
+                        </li>
+                        <li class="need-item">
+                            <span>希望寻求品牌联合</span>
+                            <button class="edit-btn" onclick="editNeed(2)">编辑</button>
+                        </li>
+                    </ul>
+                    <button class="add-btn" onclick="addNeed()">+ 添加需求</button>
+                </div>
+            </div>
+
+            <div>
+                <!-- 知识掌握情况 -->
+                <div class="sidebar-card">
+                    <div class="card-title">知识掌握情况</div>
+                    <div class="knowledge-stats">
+                        <div class="knowledge-item">
+                            <span class="knowledge-label">已掌握</span>
+                            <span class="knowledge-value">12个</span>
+                        </div>
+                        <div class="knowledge-item">
+                            <span class="knowledge-label">学习中</span>
+                            <span class="knowledge-value">5个</span>
+                        </div>
+                        <div class="knowledge-item">
+                            <span class="knowledge-label">未开始</span>
+                            <span class="knowledge-value">8个</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 数字化概况 -->
+                <div class="sidebar-card">
+                    <div class="card-title">数字化概况</div>
+                    <div style="font-size: 14px; color: #666; line-height: 1.8;">
+                        <div style="margin-bottom: 12px;">
+                            <div style="color: #999; margin-bottom: 4px;">微信小店</div>
+                            <div style="font-weight: bold;">已开通</div>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <div style="color: #999; margin-bottom: 4px;">视频号</div>
+                            <div style="font-weight: bold;">已开通</div>
+                        </div>
+                        <div style="margin-bottom: 12px;">
+                            <div style="color: #999; margin-bottom: 4px;">云服务小程序</div>
+                            <div style="font-weight: bold;">未开通</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 数据同步 -->
+                <div class="sidebar-card">
+                    <div class="card-title">数据同步</div>
+                    <div style="font-size: 14px; color: #666; margin-bottom: 16px;">
+                        最后同步时间：2024-01-15 10:30
+                    </div>
+                    <button class="btn btn-primary" style="width: 100%;" onclick="syncData()">立即同步</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航跳转
+        const navRoutes = {
+            '首页': '交互原型-首页.html',
+            '知识图谱': '交互原型-知识图谱.html',
+            '我的名片': '交互原型-数字化名片.html',
+            '学员中心': '交互原型-学员等级.html',
+            '学习路径': '交互原型-学习路径.html',
+            '活动中心': '交互原型-活动中心.html',
+            '社区': '交互原型-社区首页.html'
+        };
+
+        function goToHome() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function goToNav(navName) {
+            if (navRoutes[navName]) {
+                window.location.href = navRoutes[navName];
+            }
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function editCard() {
+            alert('编辑名片信息');
+        }
+
+        function shareCard() {
+            alert('分享名片（生成二维码或链接）');
+        }
+
+        function editAbility() {
+            alert('编辑能力模型');
+        }
+
+        function showAbilityDetail(type) {
+            alert(`查看${type}能力详情`);
+        }
+
+        function editServices() {
+            alert('编辑可提供服务');
+        }
+
+        function addService() {
+            alert('添加服务');
+        }
+
+        function editNeeds() {
+            alert('编辑需求');
+        }
+
+        function editNeed(id) {
+            alert(`编辑需求 ID: ${id}`);
+        }
+
+        function addNeed() {
+            alert('添加需求');
+        }
+
+        function syncData() {
+            alert('正在同步数据...');
+            setTimeout(() => {
+                alert('数据同步成功！');
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
+

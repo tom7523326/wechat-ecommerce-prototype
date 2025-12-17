@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>微信电商能力提升平台 - 首页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item.active {
+            color: #07c160;
+            background: #e6f7f0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        /* 主内容区 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* 欢迎横幅 */
+        .welcome-banner {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 32px;
+            color: #fff;
+            margin-bottom: 24px;
+        }
+
+        .welcome-title {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .welcome-stats {
+            display: flex;
+            gap: 32px;
+            margin-top: 16px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-top: 4px;
+        }
+
+        /* 数据卡片组 */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .stat-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .stat-card-value {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-card-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .stat-card-trend {
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .trend-up {
+            color: #52c41a;
+        }
+
+        .trend-down {
+            color: #ff4d4f;
+        }
+
+        /* 学习进度卡片 */
+        .progress-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 16px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 16px;
+        }
+
+        .recommended-courses {
+            display: flex;
+            gap: 16px;
+            overflow-x: auto;
+        }
+
+        .course-item {
+            min-width: 200px;
+            background: #f9f9f9;
+            border-radius: 8px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .course-item:hover {
+            background: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        .course-title {
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .course-info {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 能力雷达图区域 */
+        .radar-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 24px;
+        }
+
+        .radar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 300px;
+        }
+
+        .radar-chart {
+            width: 300px;
+            height: 300px;
+            position: relative;
+        }
+
+        .radar-axis {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 200px;
+            height: 200px;
+            border: 2px solid #e0e0e0;
+            border-radius: 50%;
+        }
+
+        .radar-point {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #667eea;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .radar-point:hover {
+            transform: scale(1.5);
+            background: #764ba2;
+        }
+
+        .radar-label {
+            position: absolute;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* 最新动态 */
+        .news-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .news-item {
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .news-item:hover {
+            background: #f9f9f9;
+            margin: 0 -24px;
+            padding: 16px 24px;
+        }
+
+        .news-item:last-child {
+            border-bottom: none;
+        }
+
+        .news-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .news-time {
+            font-size: 12px;
+            color: #999;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #07c160;
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #06ad56;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .nav-menu {
+                display: none;
+            }
+
+            .welcome-stats {
+                flex-direction: column;
+                gap: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo">微信电商能力提升</div>
+            <div class="nav-menu">
+                <div class="nav-item active">首页</div>
+                <div class="nav-item">知识图谱</div>
+                <div class="nav-item">我的名片</div>
+                <div class="nav-item">学员中心</div>
+                <div class="nav-item">学习路径</div>
+                <div class="nav-item">活动中心</div>
+                <div class="nav-item">社区</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <!-- 主内容区 -->
+    <div class="container">
+        <!-- 欢迎横幅 -->
+        <div class="welcome-banner">
+            <div class="welcome-title">欢迎回来，张同学 👋</div>
+            <div class="welcome-stats">
+                <div class="stat-item">
+                    <div class="stat-value">B级</div>
+                    <div class="stat-label">当前等级</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">500</div>
+                    <div class="stat-label">微信豆</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">28</div>
+                    <div class="stat-label">学习天数</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 数据卡片组 -->
+        <div class="stats-grid">
+            <div class="stat-card" onclick="showDetail('fans')">
+                <div class="stat-card-icon" style="background: #e6f7ff; color: #1890ff;">👥</div>
+                <div class="stat-card-value">10.2万</div>
+                <div class="stat-card-label">粉丝数</div>
+                <div class="stat-card-trend trend-up">↑ 12% 较上月</div>
+            </div>
+            <div class="stat-card" onclick="showDetail('gmv')">
+                <div class="stat-card-icon" style="background: #f6ffed; color: #52c41a;">💰</div>
+                <div class="stat-card-value">50.8万</div>
+                <div class="stat-card-label">小店GMV</div>
+                <div class="stat-card-trend trend-up">↑ 8% 较上月</div>
+            </div>
+            <div class="stat-card" onclick="showDetail('courses')">
+                <div class="stat-card-icon" style="background: #fff7e6; color: #faad14;">📚</div>
+                <div class="stat-card-value">12/20</div>
+                <div class="stat-card-label">课程完成</div>
+                <div class="stat-card-trend">进行中</div>
+            </div>
+            <div class="stat-card" onclick="showDetail('level')">
+                <div class="stat-card-icon" style="background: #f9f0ff; color: #722ed1;">⭐</div>
+                <div class="stat-card-value">B级</div>
+                <div class="stat-card-label">学员等级</div>
+                <div class="stat-card-trend">距离A级还需50单</div>
+            </div>
+        </div>
+
+        <!-- 学习进度卡片 -->
+        <div class="progress-card">
+            <div class="card-title">学习进度</div>
+            <div class="progress-text">
+                <span>整体进度：60%</span>
+                <span>已完成 12/20 门课程</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 60%;"></div>
+            </div>
+            <div style="margin-bottom: 16px;">
+                <button class="btn btn-primary" onclick="goToCourses()">继续学习</button>
+            </div>
+            <div class="recommended-courses">
+                <div class="course-item" onclick="goToCourse('1')">
+                    <div class="course-title">微信小店运营实战</div>
+                    <div class="course-info">进行中 · 2小时</div>
+                </div>
+                <div class="course-item" onclick="goToCourse('2')">
+                    <div class="course-title">直播带货技巧</div>
+                    <div class="course-info">未开始 · 1.5小时</div>
+                </div>
+                <div class="course-item" onclick="goToCourse('3')">
+                    <div class="course-title">数据分析入门</div>
+                    <div class="course-info">未开始 · 1小时</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 能力雷达图 -->
+        <div class="radar-card">
+            <div class="card-title">能力雷达图</div>
+            <div class="radar-container">
+                <div class="radar-chart">
+                    <div class="radar-axis"></div>
+                    <div class="radar-point" style="top: 20%; left: 50%;" onclick="showAbilityDetail('content')"></div>
+                    <div class="radar-label" style="top: 10%; left: 50%; transform: translateX(-50%);">内容创作</div>
+                    
+                    <div class="radar-point" style="top: 50%; left: 80%;" onclick="showAbilityDetail('live')"></div>
+                    <div class="radar-label" style="top: 50%; left: 90%;">直播能力</div>
+                    
+                    <div class="radar-point" style="top: 80%; left: 50%;" onclick="showAbilityDetail('data')"></div>
+                    <div class="radar-label" style="top: 90%; left: 50%; transform: translateX(-50%);">数据分析</div>
+                    
+                    <div class="radar-point" style="top: 50%; left: 20%;" onclick="showAbilityDetail('operation')"></div>
+                    <div class="radar-label" style="top: 50%; left: 5%;">运营能力</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 最新动态 -->
+        <div class="news-card">
+            <div class="card-title">最新动态</div>
+            <div class="news-item" onclick="showNews('1')">
+                <div class="news-title">📢 本月微信电商政策解读活动即将开始</div>
+                <div class="news-time">2小时前</div>
+            </div>
+            <div class="news-item" onclick="showNews('2')">
+                <div class="news-title">🎉 恭喜您完成"开播能力"学习路径</div>
+                <div class="news-time">1天前</div>
+            </div>
+            <div class="news-item" onclick="showNews('3')">
+                <div class="news-title">💡 S级学员实战分享：如何提升GMV</div>
+                <div class="news-time">2天前</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 交互函数
+        function showDetail(type) {
+            alert(`查看${type}详情（实际项目中会跳转到详情页）`);
+        }
+
+        function goToCourses() {
+            window.location.href = '交互原型-课程中心.html';
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function goToCourse(id) {
+            window.location.href = `交互原型-课程详情.html?id=${id}`;
+        }
+
+        function showAbilityDetail(ability) {
+            const abilityNames = {
+                'content': '内容创作',
+                'live': '直播能力',
+                'data': '数据分析',
+                'operation': '运营能力'
+            };
+            alert(`查看${abilityNames[ability]}详情（实际项目中会跳转到知识图谱对应节点）`);
+        }
+
+        function showNews(id) {
+            window.location.href = `交互原型-动态详情.html?id=${id}`;
+        }
+
+        // 导航项点击交互
+        const navRoutes = {
+            '首页': '交互原型-首页.html',
+            '知识图谱': '交互原型-知识图谱.html',
+            '我的名片': '交互原型-数字化名片.html',
+            '学员中心': '交互原型-学员等级.html',
+            '学习路径': '交互原型-学习路径.html',
+            '活动中心': '交互原型-活动中心.html',
+            '社区': '交互原型-社区首页.html'
+        };
+
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                const navText = this.textContent.trim();
+                if (navRoutes[navText] && navText !== '首页') {
+                    window.location.href = navRoutes[navText];
+                }
+            });
+        });
+
+        // 消息按钮跳转
+        document.querySelector('.icon-btn').addEventListener('click', function() {
+            window.location.href = '交互原型-消息中心.html';
+        });
+
+        // 头像跳转到个人中心
+        document.querySelector('.avatar').addEventListener('click', function() {
+            window.location.href = '交互原型-个人中心.html';
+        });
+
+        // 进度条动画
+        window.addEventListener('load', function() {
+            const progressFill = document.querySelector('.progress-fill');
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.width = '60%';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
+

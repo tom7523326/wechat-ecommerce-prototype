@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据统计 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .filter-bar {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .filter-item {
+            padding: 8px 16px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            background: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .filter-item:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .filter-item.active {
+            background: #667eea;
+            color: #fff;
+            border-color: #667eea;
+        }
+
+        .stats-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .stat-trend {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .trend-up {
+            color: #52c41a;
+        }
+
+        .trend-down {
+            color: #ff4d4f;
+        }
+
+        .chart-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .chart-container {
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f9f9f9;
+            border-radius: 4px;
+            color: #999;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .data-table th {
+            background: #f9f9f9;
+            font-weight: bold;
+            color: #666;
+        }
+
+        .data-table tr:hover {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="logo">数据统计</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="filter-bar">
+            <div class="filter-item active" onclick="filterData('week')">本周</div>
+            <div class="filter-item" onclick="filterData('month')">本月</div>
+            <div class="filter-item" onclick="filterData('quarter')">本季度</div>
+            <div class="filter-item" onclick="filterData('year')">本年</div>
+        </div>
+
+        <div class="stats-overview">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">粉丝数</span>
+                    <div class="stat-icon" style="background: #e6f7ff; color: #1890ff;">👥</div>
+                </div>
+                <div class="stat-value">10.2万</div>
+                <div class="stat-trend trend-up">
+                    <span>↑</span>
+                    <span>12% 较上月</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">小店GMV</span>
+                    <div class="stat-icon" style="background: #f6ffed; color: #52c41a;">💰</div>
+                </div>
+                <div class="stat-value">50.8万</div>
+                <div class="stat-trend trend-up">
+                    <span>↑</span>
+                    <span>8% 较上月</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">视频播放量</span>
+                    <div class="stat-icon" style="background: #fff7e6; color: #faad14;">📹</div>
+                </div>
+                <div class="stat-value">25.6万</div>
+                <div class="stat-trend trend-up">
+                    <span>↑</span>
+                    <span>15% 较上月</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-label">直播观看</span>
+                    <div class="stat-icon" style="background: #f9f0ff; color: #722ed1;">🎥</div>
+                </div>
+                <div class="stat-value">8.5万</div>
+                <div class="stat-trend trend-up">
+                    <span>↑</span>
+                    <span>20% 较上月</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="card-title">GMV趋势</div>
+            <div class="chart-container">
+                [图表：GMV趋势图]
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="card-title">粉丝增长趋势</div>
+            <div class="chart-container">
+                [图表：粉丝增长趋势图]
+            </div>
+        </div>
+
+        <div class="chart-card">
+            <div class="card-title">详细数据</div>
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>日期</th>
+                        <th>粉丝数</th>
+                        <th>GMV</th>
+                        <th>视频播放</th>
+                        <th>直播观看</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>2024-01-15</td>
+                        <td>102,000</td>
+                        <td>18,500</td>
+                        <td>8,200</td>
+                        <td>2,800</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-14</td>
+                        <td>101,800</td>
+                        <td>16,200</td>
+                        <td>7,500</td>
+                        <td>2,500</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-13</td>
+                        <td>101,500</td>
+                        <td>15,800</td>
+                        <td>7,200</td>
+                        <td>2,300</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-12</td>
+                        <td>101,200</td>
+                        <td>14,500</td>
+                        <td>6,800</td>
+                        <td>2,100</td>
+                    </tr>
+                    <tr>
+                        <td>2024-01-11</td>
+                        <td>101,000</td>
+                        <td>13,200</td>
+                        <td>6,500</td>
+                        <td>1,900</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function filterData(period) {
+            document.querySelectorAll('.filter-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            alert(`筛选时间段：${period}`);
+        }
+    </script>
+</body>
+</html>
+

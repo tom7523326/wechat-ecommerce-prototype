@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>学员社区 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+
+        .nav-item:hover {
+            background: #f0f0f0;
+        }
+
+        .nav-item.active {
+            color: #07c160;
+            background: #e6f7f0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #f5f5f5;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+
+        .icon-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .publish-bar {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .publish-input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 12px;
+            resize: none;
+            min-height: 80px;
+        }
+
+        .publish-input:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+        }
+
+        .publish-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .publish-tools {
+            display: flex;
+            gap: 12px;
+        }
+
+        .tool-btn {
+            padding: 6px 12px;
+            border: 1px solid #d9d9d9;
+            background: #fff;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .tool-btn:hover {
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .publish-btn {
+            padding: 8px 24px;
+            background: #07c160;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .publish-btn:hover {
+            background: #06ad56;
+        }
+
+        .filter-tabs {
+            background: #fff;
+            border-radius: 8px;
+            padding: 16px 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 24px;
+        }
+
+        .filter-tab {
+            padding: 8px 16px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .filter-tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+            font-weight: bold;
+        }
+
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .post-card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .post-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .post-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .post-user-info {
+            flex: 1;
+        }
+
+        .post-user-name {
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .post-meta {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            gap: 12px;
+        }
+
+        .post-level {
+            display: inline-block;
+            padding: 2px 8px;
+            background: #e6f7f0;
+            color: #07c160;
+            border-radius: 12px;
+            font-size: 11px;
+        }
+
+        .post-content {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 12px;
+        }
+
+        .post-images {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .post-image {
+            width: 100%;
+            height: 120px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .post-tags {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .post-tag {
+            padding: 4px 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .post-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 12px;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 24px;
+        }
+
+        .action-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .action-btn:hover {
+            color: #667eea;
+            background: #f5f5f5;
+            border-radius: 4px;
+        }
+
+        .action-btn.active {
+            color: #667eea;
+        }
+
+        .pinned-post {
+            background: #fff7e6;
+            border-left: 4px solid #faad14;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">微信电商能力提升</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item" onclick="goToNav('知识图谱')">知识图谱</div>
+                <div class="nav-item" onclick="goToNav('我的名片')">我的名片</div>
+                <div class="nav-item" onclick="goToNav('学员中心')">学员中心</div>
+                <div class="nav-item" onclick="goToNav('学习路径')">学习路径</div>
+                <div class="nav-item" onclick="goToNav('活动中心')">活动中心</div>
+                <div class="nav-item active" onclick="goToNav('社区')">社区</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="publish-bar">
+            <textarea class="publish-input" placeholder="分享你的想法、经验或问题..."></textarea>
+            <div class="publish-actions">
+                <div class="publish-tools">
+                    <button class="tool-btn" onclick="addImage()">📷 图片</button>
+                    <button class="tool-btn" onclick="addTopic()"># 话题</button>
+                </div>
+                <button class="publish-btn" onclick="publishPost()">发布</button>
+            </div>
+        </div>
+
+        <div class="filter-tabs">
+            <button class="filter-tab active" onclick="filterPosts('all')">全部</button>
+            <button class="filter-tab" onclick="filterPosts('qa')">问答</button>
+            <button class="filter-tab" onclick="filterPosts('experience')">经验</button>
+            <button class="filter-tab" onclick="filterPosts('resource')">资源</button>
+        </div>
+
+        <div class="post-list">
+            <div class="post-card pinned-post" onclick="goToPost('1')">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-user-info">
+                        <div class="post-user-name">
+                            官方账号
+                            <span class="post-level">官方</span>
+                        </div>
+                        <div class="post-meta">
+                            <span>2小时前</span>
+                            <span>置顶</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    【重要通知】本月政策解读活动将于1月15日19:00开始，请已报名的学员准时参加。
+                    活动将深入解读最新政策变化，帮助大家合规运营。
+                </div>
+                <div class="post-tags">
+                    <span class="post-tag">#政策解读</span>
+                    <span class="post-tag">#重要通知</span>
+                </div>
+                <div class="post-footer">
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="event.stopPropagation(); likePost('1')">
+                            👍 10
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); commentPost('1')">
+                            💬 5
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); sharePost('1')">
+                            🔄 2
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card" onclick="goToPost('2')">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-user-info">
+                        <div class="post-user-name">
+                            张同学
+                            <span class="post-level">A级</span>
+                        </div>
+                        <div class="post-meta">
+                            <span>3小时前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    分享一个提升GMV的小技巧：在直播前做好预热，提前3天发布预告视频，
+                    并在社群中预热，可以有效提升直播观看人数和转化率。我通过这个方法，
+                    单场直播GMV提升了30%！
+                </div>
+                <div class="post-images">
+                    <div class="post-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                    <div class="post-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                    <div class="post-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                </div>
+                <div class="post-tags">
+                    <span class="post-tag">#经验分享</span>
+                    <span class="post-tag">#直播技巧</span>
+                </div>
+                <div class="post-footer">
+                    <div class="post-actions">
+                        <button class="action-btn active" onclick="event.stopPropagation(); likePost('2')">
+                            👍 24
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); commentPost('2')">
+                            💬 8
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); sharePost('2')">
+                            🔄 5
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card" onclick="goToPost('3')">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-user-info">
+                        <div class="post-user-name">
+                            李同学
+                            <span class="post-level">B级</span>
+                        </div>
+                        <div class="post-meta">
+                            <span>5小时前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    请问大家，视频号直播时如何提高互动率？我每次直播观看人数还可以，
+                    但是互动评论很少，有什么好的方法吗？
+                </div>
+                <div class="post-tags">
+                    <span class="post-tag">#问答求助</span>
+                    <span class="post-tag">#直播</span>
+                </div>
+                <div class="post-footer">
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="event.stopPropagation(); likePost('3')">
+                            👍 6
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); commentPost('3')">
+                            💬 12
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); sharePost('3')">
+                            🔄 1
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="post-card" onclick="goToPost('4')">
+                <div class="post-header">
+                    <div class="post-avatar"></div>
+                    <div class="post-user-info">
+                        <div class="post-user-name">
+                            王同学
+                            <span class="post-level">S级</span>
+                        </div>
+                        <div class="post-meta">
+                            <span>1天前</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="post-content">
+                    分享一份我整理的《微信小店运营数据模板》，包含GMV分析、用户画像、
+                    商品分析等维度，需要的同学可以私信我获取。
+                </div>
+                <div class="post-tags">
+                    <span class="post-tag">#资源分享</span>
+                    <span class="post-tag">#数据分析</span>
+                </div>
+                <div class="post-footer">
+                    <div class="post-actions">
+                        <button class="action-btn" onclick="event.stopPropagation(); likePost('4')">
+                            👍 45
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); commentPost('4')">
+                            💬 18
+                        </button>
+                        <button class="action-btn" onclick="event.stopPropagation(); sharePost('4')">
+                            🔄 9
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 导航跳转
+        const navRoutes = {
+            '首页': '交互原型-首页.html',
+            '知识图谱': '交互原型-知识图谱.html',
+            '我的名片': '交互原型-数字化名片.html',
+            '学员中心': '交互原型-学员等级.html',
+            '学习路径': '交互原型-学习路径.html',
+            '活动中心': '交互原型-活动中心.html',
+            '社区': '交互原型-社区首页.html'
+        };
+
+        function goToHome() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function goToNav(navName) {
+            if (navRoutes[navName]) {
+                window.location.href = navRoutes[navName];
+            }
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function addImage() {
+            alert('添加图片');
+        }
+
+        function addTopic() {
+            alert('添加话题标签');
+        }
+
+        function publishPost() {
+            alert('发布动态');
+        }
+
+        function filterPosts(type) {
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            alert(`筛选类型：${type}`);
+        }
+
+        function goToPost(id) {
+            window.location.href = `交互原型-动态详情.html?id=${id}`;
+        }
+
+        function likePost(id) {
+            event.stopPropagation();
+            const btn = event.target;
+            if (btn.classList.contains('active')) {
+                btn.classList.remove('active');
+                alert(`取消点赞 ID: ${id}`);
+            } else {
+                btn.classList.add('active');
+                alert(`点赞 ID: ${id}`);
+            }
+        }
+
+        function commentPost(id) {
+            event.stopPropagation();
+            alert(`评论 ID: ${id}`);
+        }
+
+        function sharePost(id) {
+            event.stopPropagation();
+            alert(`分享 ID: ${id}`);
+        }
+    </script>
+</body>
+</html>
+

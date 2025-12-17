@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 微信电商能力提升平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        .navbar {
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: #f5f5f5;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #07c160;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .profile-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 12px;
+            padding: 32px;
+            color: #fff;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+        }
+
+        .profile-info {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 4px solid rgba(255,255,255,0.3);
+        }
+
+        .profile-details h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .profile-level {
+            display: inline-block;
+            padding: 6px 16px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 16px;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .menu-section {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+
+        .menu-list {
+            list-style: none;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .menu-item:hover {
+            background: #f9f9f9;
+            margin: 0 -24px;
+            padding: 16px 24px;
+        }
+
+        .menu-item:last-child {
+            border-bottom: none;
+        }
+
+        .menu-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .menu-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .menu-icon.profile {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        .menu-icon.card {
+            background: #f6ffed;
+            color: #52c41a;
+        }
+
+        .menu-icon.course {
+            background: #fff7e6;
+            color: #faad14;
+        }
+
+        .menu-icon.data {
+            background: #f9f0ff;
+            color: #722ed1;
+        }
+
+        .menu-icon.setting {
+            background: #fff0f6;
+            color: #eb2f96;
+        }
+
+        .menu-icon.help {
+            background: #e6f7ff;
+            color: #1890ff;
+        }
+
+        .menu-text {
+            font-size: 16px;
+        }
+
+        .menu-badge {
+            padding: 2px 8px;
+            background: #ff4d4f;
+            color: #fff;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+
+        .menu-arrow {
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <button class="back-btn" onclick="goBack()">←</button>
+            <div class="logo">个人中心</div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="profile-header">
+            <div class="profile-info">
+                <div class="profile-avatar"></div>
+                <div class="profile-details">
+                    <h2>张同学</h2>
+                    <div class="profile-level">B级学员</div>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value">12</div>
+                    <div class="stat-label">已完成课程</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">28</div>
+                    <div class="stat-label">学习天数</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">500</div>
+                    <div class="stat-label">微信豆</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value">8</div>
+                    <div class="stat-label">获得证书</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-section">
+            <h3 class="section-title">我的</h3>
+            <ul class="menu-list">
+                <li class="menu-item" onclick="goToPage('profile')">
+                    <div class="menu-left">
+                        <div class="menu-icon profile">👤</div>
+                        <span class="menu-text">个人资料</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+                <li class="menu-item" onclick="goToPage('card')">
+                    <div class="menu-left">
+                        <div class="menu-icon card">📇</div>
+                        <span class="menu-text">我的名片</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+                <li class="menu-item" onclick="goToPage('courses')">
+                    <div class="menu-left">
+                        <div class="menu-icon course">📚</div>
+                        <span class="menu-text">我的课程</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+                <li class="menu-item" onclick="goToPage('data')">
+                    <div class="menu-left">
+                        <div class="menu-icon data">📊</div>
+                        <span class="menu-text">数据统计</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="menu-section">
+            <h3 class="section-title">设置</h3>
+            <ul class="menu-list">
+                <li class="menu-item" onclick="goToPage('settings')">
+                    <div class="menu-left">
+                        <div class="menu-icon setting">⚙️</div>
+                        <span class="menu-text">系统设置</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+                <li class="menu-item" onclick="goToPage('help')">
+                    <div class="menu-left">
+                        <div class="menu-icon help">❓</div>
+                        <span class="menu-text">帮助中心</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+                <li class="menu-item" onclick="goToPage('about')">
+                    <div class="menu-left">
+                        <div class="menu-icon help">ℹ️</div>
+                        <span class="menu-text">关于我们</span>
+                    </div>
+                    <span class="menu-arrow">›</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.location.href = '交互原型-首页.html';
+        }
+
+        function goToPage(page) {
+            const routes = {
+                'profile': '编辑个人资料',
+                'card': '交互原型-数字化名片.html',
+                'courses': '交互原型-课程中心.html',
+                'data': '交互原型-数据统计.html',
+                'settings': '系统设置',
+                'help': '帮助中心',
+                'about': '关于我们'
+            };
+
+            if (routes[page] && routes[page].startsWith('交互原型')) {
+                window.location.href = routes[page];
+            } else {
+                alert(routes[page] || '页面开发中');
+            }
+        }
+    </script>
+</body>
+</html>
+
