@@ -748,34 +748,50 @@
 
     <script>
         function goToMessages() {
-            alert('跳转到消息中心');
+            window.location.href = '交互原型-消息中心.html';
         }
 
         function goToProfile() {
-            alert('跳转到个人中心');
+            window.location.href = '交互原型-个人中心.html';
         }
 
         function goToData(type) {
-            alert(`查看${type}数据详情`);
+            const routes = {
+                'business': '交互原型-数据统计.html',
+                'growth': '原型-SABC分层体系v2.html',
+                'learning': '交互原型-学习路径.html',
+                'resource': '交互原型-资源对接中心.html'
+            };
+            window.location.href = routes[type] || '交互原型-数据中台.html';
         }
 
         function goToRecommendation(type) {
-            alert(`查看推荐：${type}`);
+            const routes = {
+                'course': '交互原型-课程中心.html',
+                'resource': '交互原型-资源对接中心.html',
+                'activity': '交互原型-活动中心.html'
+            };
+            window.location.href = routes[type] || '交互原型-课程中心.html';
         }
 
         function toggleTask(element) {
             const checkbox = element.querySelector('.task-checkbox');
             checkbox.classList.toggle('checked');
+            // 跳转到对应的任务详情（可选）
+            // window.location.href = '交互原型-任务详情.html';
         }
 
         function goToTab(tab) {
-            // 更新选中状态
-            document.querySelectorAll('.bottom-nav-item').forEach(item => {
-                item.classList.remove('active');
-            });
-            event.currentTarget.classList.add('active');
-            
-            alert(`切换到：${tab}`);
+            const routes = {
+                'home': '原型-首页v2.html',
+                'learn': '交互原型-课程中心.html',
+                'resource': '交互原型-资源对接中心.html',
+                'community': '交互原型-社区首页.html',
+                'profile': '交互原型-个人中心.html'
+            };
+            if (routes[tab]) {
+                window.location.href = routes[tab];
+            }
         }
     </script>
 </body>

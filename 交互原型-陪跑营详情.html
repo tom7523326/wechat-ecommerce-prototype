@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>陪跑营详情 - 乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --warning: #FA8C16;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --background: #FFFFFF;
+            --background-light: #FAFAFA;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --radius-lg: 12px;
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+            background: var(--background-light);
+            color: var(--text-primary);
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background: var(--background);
+            box-shadow: var(--shadow-card);
+            padding: 0 var(--spacing-lg);
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--background-light);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        .header-card {
+            background: linear-gradient(135deg, #FFF7E6, #FFE7BA);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .camp-title {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .camp-meta {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .section-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-card);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .week-item {
+            padding: var(--spacing-md);
+            background: var(--background-light);
+            border-radius: 8px;
+            margin-bottom: 12px;
+        }
+
+        .week-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .week-tasks {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            background: var(--primary-color);
+            color: var(--background);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div style="font-size: 18px; font-weight: 600;">陪跑营详情</div>
+        <div style="width: 40px;"></div>
+    </nav>
+
+    <div class="container">
+        <div class="header-card">
+            <div class="camp-title">🎯 短视频内容创作营</div>
+            <div class="camp-meta">
+                <span>📅 周期：4周</span>
+                <span>👥 参与人数：156人</span>
+                <span>📈 完成率：78%</span>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">课程安排</div>
+            <div class="week-item">
+                <div class="week-title">第1周：内容策划</div>
+                <div class="week-tasks">• 学习选题技巧<br>• 完成3个选题方案<br>• 参与周三直播答疑</div>
+            </div>
+            <div class="week-item">
+                <div class="week-title">第2周：拍摄技巧</div>
+                <div class="week-tasks">• 学习拍摄基础<br>• 发布3条短视频<br>• 互评作品</div>
+            </div>
+            <div class="week-item">
+                <div class="week-title">第3周：剪辑优化</div>
+                <div class="week-tasks">• 学习剪辑技巧<br>• 优化历史作品<br>• 提交优化报告</div>
+            </div>
+            <div class="week-item">
+                <div class="week-title">第4周：数据复盘</div>
+                <div class="week-tasks">• 数据分析方法<br>• 个人作品复盘<br>• 成果展示</div>
+            </div>
+        </div>
+
+        <div class="section-card">
+            <div class="section-title">我的进度</div>
+            <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">
+                已完成 6/8 项任务，完成度 75%
+            </p>
+            <button class="btn" onclick="submitWork()">提交本周作业</button>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <nav style="display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #FFF; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); padding: 8px 0; z-index: 1000;">
+        <div style="display: flex; justify-content: space-around;">
+            <a href="原型-首页v2.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">🏠</div>
+                <div style="font-size: 11px;">首页</div>
+            </a>
+            <a href="交互原型-课程中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">📚</div>
+                <div style="font-size: 11px;">学习</div>
+            </a>
+            <a href="交互原型-资源对接中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">🤝</div>
+                <div style="font-size: 11px;">资源</div>
+            </a>
+            <a href="交互原型-社群运营中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #07C160; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">💬</div>
+                <div style="font-size: 11px;">社群</div>
+            </a>
+            <a href="交互原型-个人中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">👤</div>
+                <div style="font-size: 11px;">我的</div>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        function goBack() {
+            window.location.href = '交互原型-社群运营中心.html';
+        }
+
+        function submitWork() {
+            alert('提交作业成功！');
+        }
+    </script>
+</body>
+</html>
+

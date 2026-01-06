@@ -552,11 +552,12 @@
 
     <script>
         function goBack() {
-            window.history.back();
+            window.location.href = '原型-首页v2.html';
         }
 
         function selectLevel(level) {
-            alert(`查看${level}级详情`);
+            // 可以跳转到对应等级的详情页
+            window.location.href = `交互原型-学员等级.html?level=${level}`;
         }
 
         // 进度条动画

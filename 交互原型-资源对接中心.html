@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>资源对接中心 - 乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --background: #FFFFFF;
+            --background-light: #FAFAFA;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --radius-lg: 12px;
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+            background: var(--background-light);
+            color: var(--text-primary);
+            padding-bottom: 60px;
+        }
+
+        .navbar {
+            background: var(--background);
+            box-shadow: var(--shadow-card);
+            padding: 0 var(--spacing-lg);
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--background-light);
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-md);
+        }
+
+        .section-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            box-shadow: var(--shadow-card);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .match-card {
+            background: linear-gradient(135deg, #E6F7FF, #BAE7FF);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-md);
+            border-left: 4px solid #1890FF;
+        }
+
+        .match-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .match-score {
+            background: var(--background);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #1890FF;
+        }
+
+        .match-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .match-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--background);
+        }
+
+        .resource-item {
+            padding: var(--spacing-md);
+            background: var(--background-light);
+            border-radius: var(--radius-lg);
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .resource-item:hover {
+            background: #F0F0F0;
+            transform: translateX(4px);
+        }
+
+        .resource-info {
+            flex: 1;
+        }
+
+        .resource-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .resource-meta {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .resource-status {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #F6FFED;
+            color: #52C41A;
+        }
+
+        .status-pending {
+            background: #FFF7E6;
+            color: #FA8C16;
+        }
+
+        .add-btn {
+            width: 100%;
+            padding: 16px;
+            border: 2px dashed #D9D9D9;
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 12px;
+        }
+
+        .add-btn:hover {
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="nav-title">资源对接中心</div>
+        <div style="width: 40px;"></div>
+    </nav>
+
+    <div class="container">
+        <!-- 智能匹配推荐 -->
+        <div class="match-card">
+            <div class="match-header">
+                <h3 style="font-size: 16px; font-weight: 600;">🎯 智能匹配推荐</h3>
+                <span class="match-score">匹配度 95%</span>
+            </div>
+            <div class="match-title">李老师（S级学员）- 直播带货达人</div>
+            <div class="match-desc">擅长农产品直播带货，月均GMV 200万+，可提供直播指导和合作带货</div>
+            <button class="btn btn-primary" onclick="viewMatch()">查看详情</button>
+        </div>
+
+        <!-- 我的需求 -->
+        <div class="section-card">
+            <div class="section-title">
+                <span>📝</span>
+                <span>我的需求</span>
+            </div>
+            <div class="resource-item" onclick="viewNeed('1')">
+                <div class="resource-info">
+                    <div class="resource-title">寻找农产品带货达人</div>
+                    <div class="resource-meta">发布时间：2024-01-10 | 已匹配3个</div>
+                </div>
+                <span class="resource-status status-active">进行中</span>
+            </div>
+            <div class="resource-item" onclick="viewNeed('2')">
+                <div class="resource-info">
+                    <div class="resource-title">寻求供应链资源</div>
+                    <div class="resource-meta">发布时间：2024-01-08 | 已匹配1个</div>
+                </div>
+                <span class="resource-status status-pending">待处理</span>
+            </div>
+            <button class="add-btn" onclick="addNeed()">+ 发布新需求</button>
+        </div>
+
+        <!-- 可提供资源 -->
+        <div class="section-card">
+            <div class="section-title">
+                <span>🎁</span>
+                <span>可提供资源</span>
+            </div>
+            <div class="resource-item" onclick="viewResource('1')">
+                <div class="resource-info">
+                    <div class="resource-title">有机蔬菜供应</div>
+                    <div class="resource-meta">类型：产品 | 认证状态：已认证</div>
+                </div>
+                <span class="resource-status status-active">已认证</span>
+            </div>
+            <div class="resource-item" onclick="viewResource('2')">
+                <div class="resource-info">
+                    <div class="resource-title">直播带货服务</div>
+                    <div class="resource-meta">类型：能力 | 认证状态：已认证</div>
+                </div>
+                <span class="resource-status status-active">已认证</span>
+            </div>
+            <button class="add-btn" onclick="addResource()">+ 添加资源</button>
+        </div>
+
+        <!-- 对接记录 -->
+        <div class="section-card">
+            <div class="section-title">
+                <span>📋</span>
+                <span>对接记录</span>
+            </div>
+            <div class="resource-item" onclick="viewRecord('1')">
+                <div class="resource-info">
+                    <div class="resource-title">与王老师达成合作</div>
+                    <div class="resource-meta">2024-01-10 | 类型：达人合作</div>
+                </div>
+                <span class="resource-status status-active">成功</span>
+            </div>
+            <div class="resource-item" onclick="viewRecord('2')">
+                <div class="resource-info">
+                    <div class="resource-title">获得供应链资源推荐</div>
+                    <div class="resource-meta">2024-01-05 | 类型：资源推荐</div>
+                </div>
+                <span class="resource-status status-active">成功</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <nav class="bottom-nav" style="display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #FFF; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); padding: 8px 0; z-index: 1000;">
+        <div style="display: flex; justify-content: space-around;">
+            <a href="原型-首页v2.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">🏠</div>
+                <div style="font-size: 11px;">首页</div>
+            </a>
+            <a href="交互原型-课程中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">📚</div>
+                <div style="font-size: 11px;">学习</div>
+            </a>
+            <a href="交互原型-资源对接中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #07C160; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">🤝</div>
+                <div style="font-size: 11px;">资源</div>
+            </a>
+            <a href="交互原型-社区首页.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">💬</div>
+                <div style="font-size: 11px;">社群</div>
+            </a>
+            <a href="交互原型-个人中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">👤</div>
+                <div style="font-size: 11px;">我的</div>
+            </a>
+        </div>
+    </nav>
+
+    <script>
+        function goBack() {
+            window.location.href = '原型-首页v2.html';
+        }
+
+        function viewMatch() {
+            window.location.href = '交互原型-数字化名片.html';
+        }
+
+        function viewNeed(id) {
+            alert(`查看需求详情 ID: ${id}`);
+        }
+
+        function addNeed() {
+            alert('发布新需求（实际应打开表单页面）');
+        }
+
+        function viewResource(id) {
+            alert(`查看资源详情 ID: ${id}`);
+        }
+
+        function addResource() {
+            alert('添加资源（实际应打开表单页面）');
+        }
+
+        function viewRecord(id) {
+            alert(`查看对接记录 ID: ${id}`);
+        }
+    </script>
+</body>
+</html>
+
