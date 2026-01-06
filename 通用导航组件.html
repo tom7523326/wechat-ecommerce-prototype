@@ -1,0 +1,116 @@
+<!-- 通用导航栏组件 - 可复制到任何页面 -->
+<style>
+    /* 底部导航（移动端）*/
+    .bottom-nav {
+        display: none;
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--background, #FFF);
+        box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+        padding: 8px 0;
+        z-index: 1000;
+        border-top: 1px solid #F0F0F0;
+    }
+
+    .bottom-nav-list {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    .bottom-nav-item {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 4px;
+        cursor: pointer;
+        padding: 4px 8px;
+        color: var(--text-tertiary, #8C8C8C);
+        transition: all 0.2s;
+        flex: 1;
+        text-decoration: none;
+    }
+
+    .bottom-nav-item.active {
+        color: var(--primary-color, #07C160);
+    }
+
+    .bottom-nav-icon {
+        font-size: 24px;
+    }
+
+    .bottom-nav-label {
+        font-size: 11px;
+        font-weight: 500;
+    }
+
+    @media (max-width: 768px) {
+        .bottom-nav {
+            display: block;
+        }
+
+        body {
+            padding-bottom: 60px;
+        }
+    }
+</style>
+
+<!-- 底部导航HTML -->
+<nav class="bottom-nav">
+    <div class="bottom-nav-list">
+        <a href="原型-首页v2.html" class="bottom-nav-item" id="nav-home">
+            <div class="bottom-nav-icon">🏠</div>
+            <div class="bottom-nav-label">首页</div>
+        </a>
+        <a href="交互原型-课程中心.html" class="bottom-nav-item" id="nav-learn">
+            <div class="bottom-nav-icon">📚</div>
+            <div class="bottom-nav-label">学习</div>
+        </a>
+        <a href="交互原型-数据中台.html" class="bottom-nav-item" id="nav-resource">
+            <div class="bottom-nav-icon">🤝</div>
+            <div class="bottom-nav-label">资源</div>
+        </a>
+        <a href="交互原型-社区首页.html" class="bottom-nav-item" id="nav-community">
+            <div class="bottom-nav-icon">💬</div>
+            <div class="bottom-nav-label">社群</div>
+        </a>
+        <a href="交互原型-个人中心.html" class="bottom-nav-item" id="nav-profile">
+            <div class="bottom-nav-icon">👤</div>
+            <div class="bottom-nav-label">我的</div>
+        </a>
+    </div>
+</nav>
+
+<script>
+// 自动高亮当前页面的导航项
+(function() {
+    const currentPage = window.location.pathname.split('/').pop();
+    const navMap = {
+        '原型-首页v2.html': 'nav-home',
+        '交互原型-首页.html': 'nav-home',
+        '交互原型-课程中心.html': 'nav-learn',
+        '交互原型-学习路径.html': 'nav-learn',
+        '交互原型-知识图谱.html': 'nav-learn',
+        '交互原型-数据中台.html': 'nav-resource',
+        '交互原型-数字化名片.html': 'nav-resource',
+        '交互原型-精准筛选.html': 'nav-resource',
+        '交互原型-社区首页.html': 'nav-community',
+        '交互原型-活动中心.html': 'nav-community',
+        '交互原型-个人中心.html': 'nav-profile',
+        '交互原型-数据统计.html': 'nav-profile'
+    };
+
+    const navId = navMap[currentPage];
+    if (navId) {
+        const navItem = document.getElementById(navId);
+        if (navItem) {
+            navItem.classList.add('active');
+        }
+    }
+})();
+</script>
+
