@@ -74,11 +74,13 @@
         <p style="font-size: 18px; margin-bottom: 10px;">产品原型演示</p>
         <div class="links">
             <a href="原型导航-完整版.html" class="link-btn">📋 完整导航（推荐）</a>
-            <a href="交互原型-首页.html" class="link-btn">🏠 首页</a>
-            <a href="交互原型-学员准入.html" class="link-btn">📝 学员准入</a>
+            <a href="交互原型-首页.html" class="link-btn">🏠 首页（主入口）</a>
+            <a href="交互原型-学员准入.html" class="link-btn">📝 开始准入</a>
             <a href="交互原型-知识图谱.html" class="link-btn">🗺️ 知识图谱</a>
-            <a href="交互原型-数字化名片.html" class="link-btn">👤 数字化名片</a>
-            <a href="交互原型-学员等级.html" class="link-btn">⭐ 学员等级</a>
+        </div>
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="font-size: 14px; opacity: 0.8; margin-bottom: 12px;">升级版演示（未来方向）</p>
+            <a href="原型-首页v2.html" class="link-btn" style="background: rgba(255,255,255,0.15);">🎨 数据驾驶舱 v2.0</a>
         </div>
         <div class="info">
             <p>如果链接无法打开，请尝试直接访问：</p>
@@ -91,10 +93,10 @@
         </div>
     </div>
     <script>
-        // 自动跳转到完整导航页（3秒后）
+        // 自动跳转到主首页（3秒后）
         setTimeout(function() {
             try {
-                window.location.href = '原型导航-完整版.html';
+                window.location.href = '交互原型-首页.html';
             } catch(e) {
                 console.log('自动跳转失败，请手动点击链接');
             }
