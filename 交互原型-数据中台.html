@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>数据中台 - 乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            --primary: #07C160;
+            --gradient-start: #667EEA;
+            --gradient-end: #764BA2;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #FAFAFA;
+            --bg-tertiary: #F5F5F5;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            padding: 0 var(--spacing-lg);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-item {
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 150ms;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .nav-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: #E6F7F0;
+            font-weight: 500;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--bg-tertiary);
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            color: #fff;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .data-tabs {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+            background: var(--bg-primary);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .data-tab {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 2px solid transparent;
+            transition: all 150ms;
+        }
+
+        .data-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .data-tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+            font-weight: 500;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .main-dashboard {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .dashboard-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .chart-container {
+            height: 400px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-tertiary);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .data-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+
+        .summary-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .summary-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .sidebar-panel {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .panel-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .panel-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .data-list {
+            list-style: none;
+        }
+
+        .data-list-item {
+            padding: var(--spacing-md) 0;
+            border-bottom: 1px solid var(--bg-tertiary);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .data-list-item:last-child {
+            border-bottom: none;
+        }
+
+        .data-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .data-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .data-sources {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-lg);
+        }
+
+        .source-card {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            text-align: center;
+        }
+
+        .source-icon {
+            font-size: 32px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .source-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-summary {
+                grid-template-columns: 1fr;
+            }
+
+            .data-sources {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">乡村数字化经营生态赋能</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item active" onclick="goToNav('数据中台')">数据中台</div>
+                <div class="nav-item" onclick="goToNav('SABC体系')">SABC体系</div>
+                <div class="nav-item" onclick="goToNav('精准筛选')">精准筛选</div>
+                <div class="nav-item" onclick="goToNav('培育路径')">培育路径</div>
+                <div class="nav-item" onclick="goToNav('社群运营')">社群运营</div>
+                <div class="nav-item" onclick="goToNav('资源对接')">资源对接</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">数据中台</h1>
+            <p class="page-subtitle">全周期数据采集、可视化看板、成效量化</p>
+        </div>
+
+        <div class="data-tabs">
+            <button class="data-tab active" onclick="switchDataTab('all')">全部数据</button>
+            <button class="data-tab" onclick="switchDataTab('learning')">学习数据</button>
+            <button class="data-tab" onclick="switchDataTab('growth')">成长数据</button>
+            <button class="data-tab" onclick="switchDataTab('operation')">经营数据</button>
+            <button class="data-tab" onclick="switchDataTab('effectiveness')">成效数据</button>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="main-dashboard">
+                <h2 class="dashboard-title">数据趋势看板</h2>
+                <div class="chart-container">
+                    [数据趋势图表：折线图/面积图]
+                </div>
+                <div class="data-summary">
+                    <div class="summary-item">
+                        <div class="summary-value">435</div>
+                        <div class="summary-label">总学员数</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">85%</div>
+                        <div class="summary-label">平均完成率</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-value">1,200万</div>
+                        <div class="summary-label">累计GMV</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sidebar-panel">
+                <div class="panel-card">
+                    <h3 class="panel-title">数据采集来源</h3>
+                    <div class="data-sources">
+                        <div class="source-card">
+                            <div class="source-icon">📱</div>
+                            <div class="source-label">服务商数据</div>
+                        </div>
+                        <div class="source-card">
+                            <div class="source-icon">📝</div>
+                            <div class="source-label">学员申报</div>
+                        </div>
+                        <div class="source-card">
+                            <div class="source-icon">🔗</div>
+                            <div class="source-label">小程序联动</div>
+                        </div>
+                        <div class="source-card">
+                            <div class="source-icon">🔐</div>
+                            <div class="source-label">资源授权</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-card">
+                    <h3 class="panel-title">数据维度</h3>
+                    <ul class="data-list">
+                        <li class="data-list-item">
+                            <span class="data-label">学员基础信息</span>
+                            <span class="data-value">435条</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">需求分析数据</span>
+                            <span class="data-value">380条</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">学习数据</span>
+                            <span class="data-value">2,156条</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">成长数据</span>
+                            <span class="data-value">1,890条</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">经营数据</span>
+                            <span class="data-value">1,245条</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">成效数据</span>
+                            <span class="data-value">856条</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="panel-card">
+                    <h3 class="panel-title">资源池</h3>
+                    <ul class="data-list">
+                        <li class="data-list-item">
+                            <span class="data-label">资源池（学员、案例）</span>
+                            <span class="data-value">120</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">成长池（验证）</span>
+                            <span class="data-value">85</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">货盘库</span>
+                            <span class="data-value">45</span>
+                        </li>
+                        <li class="data-list-item">
+                            <span class="data-label">需求池</span>
+                            <span class="data-value">68</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToHome() {
+            window.location.href = '交互原型-首页-升级版.html';
+        }
+
+        function goToNav(navName) {
+            alert(`跳转到：${navName}`);
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function switchDataTab(tab) {
+            document.querySelectorAll('.data-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            alert(`切换到${tab}数据`);
+        }
+    </script>
+</body>
+</html>
+

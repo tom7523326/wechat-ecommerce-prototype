@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SABC分层体系 - 乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            --primary: #07C160;
+            --level-s: #00A86B;
+            --level-s-bg: #E6F7F0;
+            --level-a: #1890FF;
+            --level-a-bg: #E6F7FF;
+            --level-b: #FA8C16;
+            --level-b-bg: #FFF7E6;
+            --level-c: #FFA940;
+            --level-c-bg: #FFFBE6;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #FAFAFA;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #F5F5F5;
+            color: var(--text-primary);
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            padding: 0 var(--spacing-lg);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: #E6F7F0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #F5F5F5;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            color: #fff;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .current-level {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            font-size: 14px;
+            margin-top: var(--spacing-md);
+        }
+
+        .sabc-overview {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .level-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+            cursor: pointer;
+            transition: all 300ms;
+            border-top: 4px solid;
+        }
+
+        .level-card.s {
+            border-top-color: var(--level-s);
+        }
+
+        .level-card.a {
+            border-top-color: var(--level-a);
+        }
+
+        .level-card.b {
+            border-top-color: var(--level-b);
+        }
+
+        .level-card.c {
+            border-top-color: var(--level-c);
+        }
+
+        .level-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .level-card.current {
+            border: 2px solid var(--primary);
+        }
+
+        .level-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .level-icon {
+            font-size: 32px;
+        }
+
+        .level-name {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .level-count {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .level-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .detail-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            padding-bottom: var(--spacing-md);
+            border-bottom: 2px solid var(--bg-secondary);
+        }
+
+        .growth-system {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .growth-item {
+            padding: var(--spacing-lg);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+        }
+
+        .growth-item-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .growth-list {
+            list-style: none;
+        }
+
+        .growth-list-item {
+            padding: var(--spacing-sm) 0;
+            font-size: 14px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .growth-list-item::before {
+            content: "•";
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .points-system {
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .points-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .points-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+        }
+
+        .benefit-item {
+            padding: var(--spacing-md);
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            text-align: center;
+        }
+
+        .benefit-icon {
+            font-size: 32px;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .benefit-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .sabc-overview {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .growth-system {
+                grid-template-columns: 1fr;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">乡村数字化经营生态赋能</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item" onclick="goToNav('数据中台')">数据中台</div>
+                <div class="nav-item active" onclick="goToNav('SABC体系')">SABC体系</div>
+                <div class="nav-item" onclick="goToNav('精准筛选')">精准筛选</div>
+                <div class="nav-item" onclick="goToNav('培育路径')">培育路径</div>
+                <div class="nav-item" onclick="goToNav('社群运营')">社群运营</div>
+                <div class="nav-item" onclick="goToNav('资源对接')">资源对接</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">SABC分层体系</h1>
+            <div class="current-level">当前等级：B级 - 能力提升层</div>
+        </div>
+
+        <div class="sabc-overview">
+            <div class="level-card s" onclick="selectLevel('S')">
+                <div class="level-header">
+                    <div class="level-icon">👑</div>
+                    <div class="level-name">S级</div>
+                </div>
+                <div class="level-count">5-10人</div>
+                <div class="level-desc">生态共建层</div>
+            </div>
+            <div class="level-card a" onclick="selectLevel('A')">
+                <div class="level-header">
+                    <div class="level-icon">⭐</div>
+                    <div class="level-name">A级</div>
+                </div>
+                <div class="level-count">30-50人</div>
+                <div class="level-desc">标杆储备层</div>
+            </div>
+            <div class="level-card b current" onclick="selectLevel('B')">
+                <div class="level-header">
+                    <div class="level-icon">⭐</div>
+                    <div class="level-name">B级</div>
+                </div>
+                <div class="level-count">100人</div>
+                <div class="level-desc">能力提升层</div>
+            </div>
+            <div class="level-card c" onclick="selectLevel('C')">
+                <div class="level-header">
+                    <div class="level-icon">⭐</div>
+                    <div class="level-name">C级</div>
+                </div>
+                <div class="level-count">300人</div>
+                <div class="level-desc">基础入门层</div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2 class="section-title">成长数据（愿力）+ 经营数据（能力）</h2>
+            <div class="growth-system">
+                <div class="growth-item">
+                    <div class="growth-item-title">
+                        <span>📈</span>
+                        <span>成长数据（愿力）</span>
+                    </div>
+                    <ul class="growth-list">
+                        <li class="growth-list-item">成长基础：L1启动、L2成长、L3发展、L4成熟</li>
+                        <li class="growth-list-item">成长值积分：个人学习、学习互助</li>
+                        <li class="growth-list-item">活动链接：平台活动、社群专题活动</li>
+                        <li class="growth-list-item">生态共建：经验分享、货盘搭建、达人带货</li>
+                    </ul>
+                </div>
+                <div class="growth-item">
+                    <div class="growth-item-title">
+                        <span>💰</span>
+                        <span>经营数据（能力）</span>
+                    </div>
+                    <ul class="growth-list">
+                        <li class="growth-list-item">微信小店动销数据</li>
+                        <li class="growth-list-item">带货数据（视频号/直播）</li>
+                        <li class="growth-list-item">其它电商数据</li>
+                        <li class="growth-list-item">线下转化数据</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2 class="section-title">积分体系（激励桥梁）</h2>
+            <div class="points-system">
+                <div class="points-header">
+                    <div>
+                        <div style="font-size: 14px; color: var(--text-secondary); margin-bottom: 4px;">当前积分</div>
+                        <div class="points-value">1,200</div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 12px; color: var(--text-secondary);">本月积分</div>
+                        <div style="font-size: 20px; font-weight: 600;">350</div>
+                    </div>
+                </div>
+                <div style="font-size: 12px; color: var(--text-secondary); margin-top: var(--spacing-md);">
+                    • 经营积分跨月不结转<br>
+                    • 积分用于分级（升/降）
+                </div>
+            </div>
+        </div>
+
+        <div class="detail-section">
+            <h2 class="section-title">权益体系（赋能反馈）</h2>
+            <div class="benefits-grid">
+                <div class="benefit-item">
+                    <div class="benefit-icon">🔍</div>
+                    <div class="benefit-name">账号诊断</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">👥</div>
+                    <div class="benefit-name">1对1陪跑</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🎯</div>
+                    <div class="benefit-name">活动支持</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">📚</div>
+                    <div class="benefit-name">专属课程</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🤝</div>
+                    <div class="benefit-name">资源对接</div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">🏆</div>
+                    <div class="benefit-name">案例推广</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function goToHome() {
+            window.location.href = '交互原型-首页-升级版.html';
+        }
+
+        function goToNav(navName) {
+            alert(`跳转到：${navName}`);
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function selectLevel(level) {
+            alert(`查看${level}级详情`);
+        }
+    </script>
+</body>
+</html>
+

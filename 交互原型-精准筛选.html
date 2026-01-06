@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>精准筛选系统 - 乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            --primary: #07C160;
+            --gradient-start: #667EEA;
+            --gradient-end: #764BA2;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --bg-primary: #FFFFFF;
+            --bg-secondary: #FAFAFA;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --radius-md: 8px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+            background: #F5F5F5;
+            color: var(--text-primary);
+        }
+
+        .navbar {
+            background: var(--bg-primary);
+            box-shadow: var(--shadow-sm);
+            padding: 0 var(--spacing-lg);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xl);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: var(--spacing-lg);
+        }
+
+        .nav-item {
+            padding: 8px 16px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .nav-item.active {
+            color: var(--primary);
+            background: #E6F7F0;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: #F5F5F5;
+            cursor: pointer;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        .page-header {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            color: #fff;
+            margin-bottom: var(--spacing-lg);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .screening-steps {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+            background: var(--bg-primary);
+            padding: var(--spacing-lg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .step-item {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+
+        .step-item::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            width: 100%;
+            height: 2px;
+            background: #F0F0F0;
+            z-index: 0;
+        }
+
+        .step-item:last-child::after {
+            display: none;
+        }
+
+        .step-item.completed::after {
+            background: var(--primary);
+        }
+
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #F0F0F0;
+            border: 2px solid #F0F0F0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--spacing-sm);
+            position: relative;
+            z-index: 1;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .step-item.completed .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .step-item.current .step-circle {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .step-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .step-item.completed .step-label,
+        .step-item.current .step-label {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .form-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-group {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .form-label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: var(--spacing-sm);
+            color: var(--text-primary);
+        }
+
+        .form-label .required {
+            color: #FF4D4F;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #D9D9D9;
+            border-radius: 4px;
+            font-size: 14px;
+            transition: all 150ms;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(7, 193, 96, 0.2);
+        }
+
+        .map-selector {
+            width: 100%;
+            height: 300px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .tag-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-sm);
+        }
+
+        .tag-item {
+            padding: 8px 16px;
+            border: 1px solid #D9D9D9;
+            border-radius: 16px;
+            background: var(--bg-primary);
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 150ms;
+        }
+
+        .tag-item:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .tag-item.selected {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .ability-radar-mini {
+            width: 100%;
+            height: 300px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+        }
+
+        .btn-group {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-xl);
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--bg-secondary);
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 150ms;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .btn-primary:hover {
+            background: #06AD56;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(7, 193, 96, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-secondary:hover {
+            background: #E8E8E8;
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+            }
+
+            .screening-steps {
+                flex-direction: column;
+            }
+
+            .step-item::after {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-left">
+            <div class="logo" onclick="goToHome()">乡村数字化经营生态赋能</div>
+            <div class="nav-menu">
+                <div class="nav-item" onclick="goToNav('首页')">首页</div>
+                <div class="nav-item" onclick="goToNav('数据中台')">数据中台</div>
+                <div class="nav-item" onclick="goToNav('SABC体系')">SABC体系</div>
+                <div class="nav-item active" onclick="goToNav('精准筛选')">精准筛选</div>
+                <div class="nav-item" onclick="goToNav('培育路径')">培育路径</div>
+                <div class="nav-item" onclick="goToNav('社群运营')">社群运营</div>
+                <div class="nav-item" onclick="goToNav('资源对接')">资源对接</div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="goToMessages()">🔔</button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="page-header">
+            <h1 class="page-title">精准筛选系统</h1>
+            <p style="font-size: 14px; opacity: 0.9;">学员招募/报名与需求匹配</p>
+        </div>
+
+        <div class="screening-steps">
+            <div class="step-item completed">
+                <div class="step-circle">✓</div>
+                <div class="step-label">基础信息采集</div>
+            </div>
+            <div class="step-item completed">
+                <div class="step-circle">✓</div>
+                <div class="step-label">数字化基础评估</div>
+            </div>
+            <div class="step-item current">
+                <div class="step-circle">3</div>
+                <div class="step-label">地域产业匹配</div>
+            </div>
+            <div class="step-item">
+                <div class="step-circle">4</div>
+                <div class="step-label">数字化需求分析</div>
+            </div>
+            <div class="step-item">
+                <div class="step-circle">5</div>
+                <div class="step-label">学员准入标准</div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">地域产业匹配</h2>
+            
+            <div class="form-group">
+                <label class="form-label">
+                    选择地域 <span class="required">*</span>
+                </label>
+                <div class="map-selector">
+                    [地图选择器：点击选择省份/城市/区县]
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    产业类型 <span class="required">*</span>
+                </label>
+                <div class="tag-selector">
+                    <div class="tag-item" onclick="toggleTag(this)">农产品</div>
+                    <div class="tag-item" onclick="toggleTag(this)">手工艺品</div>
+                    <div class="tag-item" onclick="toggleTag(this)">乡村旅游</div>
+                    <div class="tag-item" onclick="toggleTag(this)">特色美食</div>
+                    <div class="tag-item" onclick="toggleTag(this)">文化创意</div>
+                    <div class="tag-item" onclick="toggleTag(this)">其他</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    经营主体类型 <span class="required">*</span>
+                </label>
+                <div class="tag-selector">
+                    <div class="tag-item" onclick="toggleTag(this)">个体户</div>
+                    <div class="tag-item" onclick="toggleTag(this)">合作社</div>
+                    <div class="tag-item" onclick="toggleTag(this)">企业</div>
+                    <div class="tag-item" onclick="toggleTag(this)">农户</div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    地域特色标签
+                </label>
+                <div class="tag-selector">
+                    <div class="tag-item" onclick="toggleTag(this)">地理标志产品</div>
+                    <div class="tag-item" onclick="toggleTag(this)">非遗文化</div>
+                    <div class="tag-item" onclick="toggleTag(this)">生态农业</div>
+                    <div class="tag-item" onclick="toggleTag(this)">有机认证</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2 class="section-title">数字化基础评估</h2>
+            
+            <div class="form-group">
+                <label class="form-label">能力雷达图评估</label>
+                <div class="ability-radar-mini">
+                    [能力雷达图：6个维度评估]
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="form-label">
+                    当前数字化工具使用情况
+                </label>
+                <div class="tag-selector">
+                    <div class="tag-item" onclick="toggleTag(this)">微信小店</div>
+                    <div class="tag-item selected" onclick="toggleTag(this)">视频号</div>
+                    <div class="tag-item" onclick="toggleTag(this)">小程序</div>
+                    <div class="tag-item" onclick="toggleTag(this)">企业微信</div>
+                    <div class="tag-item" onclick="toggleTag(this)">直播</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="btn-group">
+            <button class="btn btn-secondary" onclick="prevStep()">上一步</button>
+            <button class="btn btn-primary" onclick="nextStep()">下一步</button>
+        </div>
+    </div>
+
+    <script>
+        function goToHome() {
+            window.location.href = '交互原型-首页-升级版.html';
+        }
+
+        function goToNav(navName) {
+            alert(`跳转到：${navName}`);
+        }
+
+        function goToMessages() {
+            window.location.href = '交互原型-消息中心.html';
+        }
+
+        function goToProfile() {
+            window.location.href = '交互原型-个人中心.html';
+        }
+
+        function toggleTag(element) {
+            element.classList.toggle('selected');
+        }
+
+        function prevStep() {
+            alert('返回上一步');
+        }
+
+        function nextStep() {
+            alert('进入下一步');
+        }
+    </script>
+</body>
+</html>
+
