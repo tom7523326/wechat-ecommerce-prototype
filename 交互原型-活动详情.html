@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>活动详情 - 微信电商能力提升平台</title>
+    <link rel="stylesheet" href="common.css">
     <style>
         * {
             margin: 0;
@@ -515,9 +516,18 @@
     </div>
 
     <script>
-        function goBack() {
-            window.location.href = '交互原型-活动中心.html';
-        }
+        // 使用common.js中的统一返回函数
+        // function goBack() 已在common.js中定义
+        
+        // URL参数处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const activityId = getUrlParam('id');
+            if (activityId) {
+                console.log(`加载活动ID: ${activityId}`);
+                // 这里可以根据activityId加载对应的活动数据
+                // loadActivityData(activityId);
+            }
+        });
 
         function registerActivity() {
             console.log('报名活动');
@@ -528,6 +538,7 @@
             console.log('已设置活动提醒');
         }
     </script>
+    <script src="common.js"></script>
 
     <!-- 底部导航（移动端） -->
     <nav style="display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #FFF; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); padding: 8px 0; z-index: 1000; border-top: 1px solid #F0F0F0;">

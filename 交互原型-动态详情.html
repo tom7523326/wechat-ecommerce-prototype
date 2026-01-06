@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>动态详情 - 微信电商能力提升平台</title>
+    <link rel="stylesheet" href="common.css">
     <style>
         * {
             margin: 0;
@@ -504,9 +505,18 @@
     </div>
 
     <script>
-        function goBack() {
-            window.location.href = '交互原型-社区首页.html';
-        }
+        // 使用common.js中的统一返回函数
+        // function goBack() 已在common.js中定义
+        
+        // URL参数处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const postId = getUrlParam('id');
+            if (postId) {
+                console.log(`加载动态ID: ${postId}`);
+                // 这里可以根据postId加载对应的动态数据
+                // loadPostData(postId);
+            }
+        });
 
         function goToProfile() {
             window.location.href = '交互原型-数字化名片.html';
@@ -548,6 +558,7 @@
             console.log(`回复评论 ID: ${id}`);
         }
     </script>
+    <script src="common.js"></script>
 
     <!-- 底部导航（移动端） -->
     <nav style="display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #FFF; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); padding: 8px 0; z-index: 1000; border-top: 1px solid #F0F0F0;">
