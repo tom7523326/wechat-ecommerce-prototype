@@ -1267,7 +1267,7 @@
             if (navRoutes[navName]) {
                 window.location.href = navRoutes[navName];
             } else {
-                alert(`页面开发中：${navName}`);
+                console.log(`页面开发中：${navName}`);
             }
         }
 
@@ -1280,17 +1280,17 @@
         }
 
         function showDetail(type) {
-            alert(`查看${type}详情`);
+            console.log(`查看${type}详情`);
         }
 
         function selectLevel(level) {
-            alert(`查看${level}级详情`);
+            console.log(`查看${level}级详情`);
         }
 
         function switchTab(tab) {
             document.querySelectorAll('.tracking-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
-            alert(`切换到${tab}标签`);
+            console.log(`切换到${tab}标签`);
         }
 
         function goToDataCenter() {
@@ -1314,11 +1314,11 @@
         }
 
         function showAbility(type) {
-            alert(`查看${type}能力详情`);
+            console.log(`查看${type}能力详情`);
         }
 
         function showNews(id) {
-            alert(`查看动态详情 ID: ${id}`);
+            console.log(`查看动态详情 ID: ${id}`);
         }
 
         // 进度条动画

@@ -449,7 +449,7 @@
         }
 
         function goToNav(navName) {
-            alert(`跳转到：${navName}`);
+            console.log(`跳转到：${navName}`);
         }
 
         function goToMessages() {
@@ -463,7 +463,7 @@
         function switchDataTab(tab) {
             document.querySelectorAll('.data-tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
-            alert(`切换到${tab}数据`);
+            console.log(`切换到${tab}数据`);
         }
     </script>
 </body>
