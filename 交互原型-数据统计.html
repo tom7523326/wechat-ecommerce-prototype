@@ -459,6 +459,37 @@
             console.log(`筛选时间段：${period}`);
         }
     </script>
+
+    <!-- 底部导航（移动端） -->
+    <nav style="display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #FFF; box-shadow: 0 -2px 8px rgba(0,0,0,0.1); padding: 8px 0; z-index: 1000; border-top: 1px solid #F0F0F0;">
+        <div style="display: flex; justify-content: space-around;">
+            <a href="交互原型-首页.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">🏠</div>
+                <div style="font-size: 11px;">首页</div>
+            </a>
+            <a href="交互原型-课程中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">📚</div>
+                <div style="font-size: 11px;">学习</div>
+            </a>
+            <a href="交互原型-资源对接中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">🤝</div>
+                <div style="font-size: 11px;">资源</div>
+            </a>
+            <a href="交互原型-社区首页.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #8C8C8C; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">💬</div>
+                <div style="font-size: 11px;">社群</div>
+            </a>
+            <a href="交互原型-个人中心.html" style="display: flex; flex-direction: column; align-items: center; gap: 4px; color: #07C160; text-decoration: none; flex: 1; padding: 4px;">
+                <div style="font-size: 24px;">👤</div>
+                <div style="font-size: 11px;">我的</div>
+            </a>
+        </div>
+    </nav>
+    <style>
+        @media (max-width: 768px) {
+            body { padding-bottom: 60px; }
+        }
+    </style>
 </body>
 </html>
 
