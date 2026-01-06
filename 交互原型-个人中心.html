@@ -421,19 +421,17 @@
 
         function goToPage(page) {
             const routes = {
-                'profile': '编辑个人资料',
+                'profile': '交互原型-数字化名片.html',
                 'card': '交互原型-数字化名片.html',
                 'courses': '交互原型-课程中心.html',
                 'data': '交互原型-数据统计.html',
-                'settings': '系统设置',
-                'help': '帮助中心',
-                'about': '关于我们'
+                'settings': '交互原型-个人中心.html',
+                'help': '交互原型-个人中心.html',
+                'about': '交互原型-个人中心.html'
             };
 
-            if (routes[page] && routes[page].startsWith('交互原型')) {
+            if (routes[page]) {
                 window.location.href = routes[page];
-            } else {
-                alert(routes[page] || '页面开发中');
             }
         }
     </script>

@@ -400,13 +400,14 @@
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
-            alert(`筛选消息类型：${type}`);
+            console.log(`筛选消息类型：${type}`);
         }
 
         function goToMessage(id) {
             const item = event.currentTarget;
             item.classList.remove('unread');
-            alert(`查看消息详情 ID: ${id}`);
+            // 根据消息类型跳转
+            window.location.href = '交互原型-动态详情.html?id=' + id;
         }
     </script>
 </body>
