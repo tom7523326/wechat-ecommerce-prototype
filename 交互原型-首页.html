@@ -669,7 +669,13 @@
     <script>
         // 交互函数
         function showDetail(type) {
-            alert(`查看${type}详情（实际项目中会跳转到详情页）`);
+            const routes = {
+                'fans': '交互原型-数据统计.html',
+                'gmv': '交互原型-数据统计.html',
+                'courses': '交互原型-课程中心.html',
+                'level': '交互原型-学员等级.html'
+            };
+            window.location.href = routes[type] || '交互原型-数据统计.html';
         }
 
         function goToCourses() {
@@ -689,13 +695,7 @@
         }
 
         function showAbilityDetail(ability) {
-            const abilityNames = {
-                'content': '内容创作',
-                'live': '直播能力',
-                'data': '数据分析',
-                'operation': '运营能力'
-            };
-            alert(`查看${abilityNames[ability]}详情（实际项目中会跳转到知识图谱对应节点）`);
+            window.location.href = '交互原型-知识图谱.html';
         }
 
         function showNews(id) {

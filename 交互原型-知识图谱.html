@@ -775,32 +775,32 @@
 
         // 视图控制
         function resetView() {
-            alert('重置视图（实际项目中会重置图谱位置和缩放）');
+            console.log('重置视图');
         }
 
         function zoomIn() {
-            alert('放大视图');
+            console.log('放大视图');
         }
 
         function zoomOut() {
-            alert('缩小视图');
+            console.log('缩小视图');
         }
 
         // 跳转函数
         function goToCourse(title) {
-            alert(`跳转到课程：${title}`);
+            window.location.href = '交互原型-课程详情.html';
         }
 
         function goToArticle(title) {
-            alert(`跳转到文章：${title}`);
+            window.location.href = '交互原型-动态详情.html';
         }
 
         function goToTool(title) {
-            alert(`打开工具：${title}`);
+            console.log(`打开工具：${title}`);
         }
 
         function startLearning(nodeId) {
-            alert(`开始学习：${nodeData[nodeId].title}`);
+            window.location.href = '交互原型-课程中心.html';
         }
 
         // 导航跳转

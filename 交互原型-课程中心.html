@@ -624,12 +624,13 @@
         }
 
         function goToProfile() {
-            alert('跳转到个人中心');
+            window.location.href = '交互原型-个人中心.html';
         }
 
         function search() {
             const keyword = document.querySelector('.search-input').value;
-            alert(`搜索：${keyword}`);
+            console.log(`搜索：${keyword}`);
+            // 实际项目中应该执行搜索并刷新列表
         }
 
         function filterByCategory(category) {
@@ -639,15 +640,15 @@
                 }
             });
             event.target.classList.add('active');
-            alert(`筛选分类：${category}`);
+            console.log(`筛选分类：${category}`);
         }
 
         function filterByDifficulty(difficulty) {
-            alert(`筛选难度：${difficulty}`);
+            console.log(`筛选难度：${difficulty}`);
         }
 
         function filterByStatus(status) {
-            alert(`筛选状态：${status}`);
+            console.log(`筛选状态：${status}`);
         }
 
         function goToCourse(id) {
@@ -655,29 +656,29 @@
         }
 
         function continueLearning(id) {
-            alert(`继续学习课程 ID: ${id}`);
+            window.location.href = `交互原型-课程详情.html?id=${id}`;
         }
 
         function startLearning(id) {
-            alert(`开始学习课程 ID: ${id}`);
+            window.location.href = `交互原型-课程详情.html?id=${id}`;
         }
 
         function reviewCourse(id) {
-            alert(`查看课程证书 ID: ${id}`);
+            window.location.href = `交互原型-课程详情.html?id=${id}`;
         }
 
         function prevPage() {
-            alert('上一页');
+            console.log('上一页');
         }
 
         function nextPage() {
-            alert('下一页');
+            console.log('下一页');
         }
 
         function goToPage(page) {
             document.querySelectorAll('.page-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            alert(`跳转到第 ${page} 页`);
+            console.log(`跳转到第 ${page} 页`);
         }
     </script>
 </body>

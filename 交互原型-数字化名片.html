@@ -748,45 +748,48 @@
         }
 
         function editCard() {
-            alert('编辑名片信息');
+            console.log('编辑名片信息');
+            // 实际应进入编辑模式
         }
 
         function shareCard() {
-            alert('分享名片（生成二维码或链接）');
+            console.log('分享名片');
+            // 实际应弹出分享弹窗
         }
 
         function editAbility() {
-            alert('编辑能力模型');
+            console.log('编辑能力模型');
         }
 
         function showAbilityDetail(type) {
-            alert(`查看${type}能力详情`);
+            window.location.href = '交互原型-知识图谱.html';
         }
 
         function editServices() {
-            alert('编辑可提供服务');
+            console.log('编辑可提供服务');
         }
 
         function addService() {
-            alert('添加服务');
+            console.log('添加服务');
         }
 
         function editNeeds() {
-            alert('编辑需求');
+            console.log('编辑需求');
         }
 
         function editNeed(id) {
-            alert(`编辑需求 ID: ${id}`);
+            console.log(`编辑需求 ID: ${id}`);
         }
 
         function addNeed() {
-            alert('添加需求');
+            console.log('添加需求');
         }
 
         function syncData() {
-            alert('正在同步数据...');
+            console.log('正在同步数据...');
             setTimeout(() => {
-                alert('数据同步成功！');
+                console.log('数据同步成功！');
+                // 可以刷新页面数据
             }, 1000);
         }
     </script>

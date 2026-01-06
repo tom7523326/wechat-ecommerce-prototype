@@ -567,7 +567,7 @@
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
-            alert(`筛选活动类型：${type}`);
+            console.log(`筛选活动类型：${type}`);
         }
 
         function goToActivity(id) {
@@ -575,11 +575,11 @@
         }
 
         function registerActivity(id) {
-            alert(`报名活动 ID: ${id}`);
+            window.location.href = `交互原型-活动详情.html?id=${id}`;
         }
 
         function viewReview(id) {
-            alert(`查看活动回顾 ID: ${id}`);
+            window.location.href = `交互原型-活动详情.html?id=${id}`;
         }
     </script>
 </body>
