@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SABC分层体系 - 乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --level-s: #FFB800;
+            --level-a: #FF6B00;
+            --level-b: #1890FF;
+            --level-c: #8C8C8C;
+            --success: #52C41A;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --text-tertiary: #8C8C8C;
+            --background: #FFFFFF;
+            --background-light: #FAFAFA;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --radius-lg: 12px;
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+            background: var(--background-light);
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        .navbar {
+            background: var(--background);
+            box-shadow: var(--shadow-card);
+            padding: 0 var(--spacing-lg);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .back-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--background-light);
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        /* 成长金字塔 */
+        .pyramid-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            overflow: hidden;
+        }
+
+        .pyramid-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: var(--spacing-lg) 0;
+            position: relative;
+        }
+
+        .pyramid-level {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .pyramid-level:hover {
+            transform: scale(1.02);
+        }
+
+        .pyramid-shape {
+            width: 100%;
+            padding: var(--spacing-md);
+            text-align: center;
+            color: var(--background);
+            font-weight: 600;
+            border-radius: var(--radius-lg);
+            position: relative;
+            clip-path: polygon(20% 0%, 80% 0%, 100% 100%, 0% 100%);
+        }
+
+        .pyramid-level-s .pyramid-shape {
+            background: linear-gradient(135deg, #FFD700 0%, var(--level-s) 100%);
+            max-width: 30%;
+        }
+
+        .pyramid-level-a .pyramid-shape {
+            background: linear-gradient(135deg, #FF8C00 0%, var(--level-a) 100%);
+            max-width: 50%;
+        }
+
+        .pyramid-level-b .pyramid-shape {
+            background: linear-gradient(135deg, #40A9FF 0%, var(--level-b) 100%);
+            max-width: 70%;
+        }
+
+        .pyramid-level-c .pyramid-shape {
+            background: linear-gradient(135deg, #BFBFBF 0%, var(--level-c) 100%);
+            max-width: 90%;
+        }
+
+        .pyramid-level.current .pyramid-shape {
+            box-shadow: 0 0 0 3px var(--background), 0 0 0 6px var(--primary-color);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .pyramid-title {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .pyramid-count {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        .pyramid-badge {
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--background);
+            color: var(--primary-color);
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+            box-shadow: var(--shadow-card);
+        }
+
+        /* 当前进度卡片 */
+        .progress-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .progress-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .progress-value {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--level-b);
+        }
+
+        .progress-bar-container {
+            position: relative;
+            height: 12px;
+            background: #F0F0F0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--level-b) 0%, #40A9FF 100%);
+            border-radius: 6px;
+            transition: width 0.8s cubic-bezier(0.4, 0.0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 50px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3));
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* 成长值获取途径 */
+        .growth-ways {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .growth-way-item {
+            padding: var(--spacing-md);
+            background: var(--background-light);
+            border-radius: var(--radius-lg);
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .way-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .way-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* 等级对比表 */
+        .comparison-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            overflow-x: auto;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            min-width: 600px;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: var(--spacing-md);
+            text-align: center;
+            border-bottom: 1px solid #F0F0F0;
+        }
+
+        .comparison-table th {
+            background: var(--background-light);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+        }
+
+        .comparison-table .level-col-s {
+            background: #FFF7E6;
+        }
+
+        .comparison-table .level-col-a {
+            background: #FFF2E8;
+        }
+
+        .comparison-table .level-col-b {
+            background: #E6F7FF;
+        }
+
+        .comparison-table .level-col-c {
+            background: #F5F5F5;
+        }
+
+        .level-icon-large {
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+
+        .level-name {
+            font-weight: 600;
+        }
+
+        .benefit-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 var(--spacing-md);
+                height: 56px;
+            }
+
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .pyramid-shape {
+                padding: 12px;
+            }
+
+            .pyramid-title {
+                font-size: 16px;
+            }
+
+            .growth-ways {
+                grid-template-columns: 1fr;
+            }
+
+            .comparison-card {
+                padding: var(--spacing-md);
+            }
+
+            body {
+                padding-bottom: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <div class="nav-title">SABC分层体系</div>
+        <div style="width: 40px;"></div>
+    </nav>
+
+    <div class="container">
+        <!-- 成长金字塔 -->
+        <div class="pyramid-card">
+            <div style="text-align: center; margin-bottom: var(--spacing-lg);">
+                <h2 style="font-size: 24px; margin-bottom: 8px;">你的成长之路</h2>
+                <p style="color: var(--text-secondary); font-size: 14px;">从C级到S级，每一步都是成长</p>
+            </div>
+            <div class="pyramid-container">
+                <div class="pyramid-level pyramid-level-s" onclick="selectLevel('S')">
+                    <div class="pyramid-shape">
+                        <div class="pyramid-title">👑 S级</div>
+                        <div class="pyramid-count">5-10人 · 生态共建</div>
+                    </div>
+                </div>
+                <div class="pyramid-level pyramid-level-a" onclick="selectLevel('A')">
+                    <div class="pyramid-shape">
+                        <div class="pyramid-title">⭐⭐⭐ A级</div>
+                        <div class="pyramid-count">30-50人 · 标杆储备</div>
+                    </div>
+                </div>
+                <div class="pyramid-level pyramid-level-b current" onclick="selectLevel('B')">
+                    <div class="pyramid-shape">
+                        <div class="pyramid-title">⭐⭐ B级</div>
+                        <div class="pyramid-count">100人 · 能力提升</div>
+                    </div>
+                    <span class="pyramid-badge">你在这里</span>
+                </div>
+                <div class="pyramid-level pyramid-level-c" onclick="selectLevel('C')">
+                    <div class="pyramid-shape">
+                        <div class="pyramid-title">⭐ C级</div>
+                        <div class="pyramid-count">300人 · 基础入门</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 当前进度 -->
+        <div class="progress-card">
+            <div class="progress-header">
+                <span class="progress-title">成长进度</span>
+                <span class="progress-value">2850 / 3000</span>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar-fill" style="width: 95%;"></div>
+            </div>
+            <p class="progress-text">再获得 <strong style="color: var(--level-a);">150成长值</strong> 即可晋升A级</p>
+
+            <h3 style="font-size: 16px; font-weight: 600; margin-top: var(--spacing-lg); margin-bottom: var(--spacing-md);">成长值获取途径</h3>
+            <div class="growth-ways">
+                <div class="growth-way-item">
+                    <div class="way-title">
+                        <span>📊</span>
+                        <span>经营数据提升</span>
+                    </div>
+                    <div class="way-desc">最多 +100 成长值/周</div>
+                </div>
+                <div class="growth-way-item">
+                    <div class="way-title">
+                        <span>📚</span>
+                        <span>完成学习任务</span>
+                    </div>
+                    <div class="way-desc">+10~50 成长值/次</div>
+                </div>
+                <div class="growth-way-item">
+                    <div class="way-title">
+                        <span>🎯</span>
+                        <span>参与社群活动</span>
+                    </div>
+                    <div class="way-desc">+5~30 成长值/次</div>
+                </div>
+                <div class="growth-way-item">
+                    <div class="way-title">
+                        <span>💡</span>
+                        <span>分享成功案例</span>
+                    </div>
+                    <div class="way-desc">+30~100 成长值/次</div>
+                </div>
+                <div class="growth-way-item">
+                    <div class="way-title">
+                        <span>🤝</span>
+                        <span>资源对接成功</span>
+                    </div>
+                    <div class="way-desc">+50 成长值/次</div>
+                </div>
+                <div class="growth-way-item">
+                    <div class="way-title">
+                        <span>👨‍🏫</span>
+                        <span>帮助其他学员</span>
+                    </div>
+                    <div class="way-desc">+10~30 成长值/次</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 等级对比表 -->
+        <div class="comparison-card">
+            <h2 style="font-size: 18px; font-weight: 600; margin-bottom: var(--spacing-md);">等级权益对比</h2>
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">权益类别</th>
+                        <th class="level-col-s">
+                            <div class="level-icon-large">👑</div>
+                            <div class="level-name">S级</div>
+                        </th>
+                        <th class="level-col-a">
+                            <div class="level-icon-large">⭐⭐⭐</div>
+                            <div class="level-name">A级</div>
+                        </th>
+                        <th class="level-col-b">
+                            <div class="level-icon-large">⭐⭐</div>
+                            <div class="level-name">B级</div>
+                        </th>
+                        <th class="level-col-c">
+                            <div class="level-icon-large">⭐</div>
+                            <div class="level-name">C级</div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="text-align: left; font-weight: 600;">培训赋能</td>
+                        <td class="level-col-s">
+                            <div class="benefit-text">专属导师<br>1V1深度指导</div>
+                        </td>
+                        <td class="level-col-a">
+                            <div class="benefit-text">1V1定期指导<br>小班深度培训</div>
+                        </td>
+                        <td class="level-col-b">
+                            <div class="benefit-text">小班课程<br>定期答疑</div>
+                        </td>
+                        <td class="level-col-c">
+                            <div class="benefit-text">基础课程<br>自主学习</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; font-weight: 600;">资源对接</td>
+                        <td class="level-col-s">
+                            <div class="benefit-text">优先对接<br>独家资源</div>
+                        </td>
+                        <td class="level-col-a">
+                            <div class="benefit-text">推荐资源<br>优先匹配</div>
+                        </td>
+                        <td class="level-col-b">
+                            <div class="benefit-text">基础资源<br>自主对接</div>
+                        </td>
+                        <td class="level-col-c">
+                            <div class="benefit-text">资源查看</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; font-weight: 600;">活动权益</td>
+                        <td class="level-col-s">
+                            <div class="benefit-text">独家活动<br>VIP待遇</div>
+                        </td>
+                        <td class="level-col-a">
+                            <div class="benefit-text">优先参与<br>线下实训</div>
+                        </td>
+                        <td class="level-col-b">
+                            <div class="benefit-text">普通活动<br>正常参与</div>
+                        </td>
+                        <td class="level-col-c">
+                            <div class="benefit-text">基础活动</div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left; font-weight: 600;">激励奖励</td>
+                        <td class="level-col-s">
+                            <div class="benefit-text">500积分/月<br>专属荣誉</div>
+                        </td>
+                        <td class="level-col-a">
+                            <div class="benefit-text">300积分/月<br>证书认证</div>
+                        </td>
+                        <td class="level-col-b">
+                            <div class="benefit-text">200积分/月<br>阶段证书</div>
+                        </td>
+                        <td class="level-col-c">
+                            <div class="benefit-text">100积分/月</div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+
+        function selectLevel(level) {
+            alert(`查看${level}级详情`);
+        }
+
+        // 进度条动画
+        window.addEventListener('load', function() {
+            const progressFill = document.querySelector('.progress-bar-fill');
+            progressFill.style.width = '0%';
+            setTimeout(() => {
+                progressFill.style.width = '95%';
+            }, 300);
+        });
+    </script>
+</body>
+</html>
+

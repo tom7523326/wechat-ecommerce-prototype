@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>乡村数字化经营生态赋能平台 - 原型导航</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --level-s: #FFB800;
+            --level-a: #FF6B00;
+            --level-b: #1890FF;
+            --level-c: #8C8C8C;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --background: #FFFFFF;
+            --background-light: #F5F5F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+            background: linear-gradient(135deg, #07C160 0%, #059A4D 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: var(--background);
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .header p {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 16px;
+            backdrop-filter: blur(10px);
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--background);
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .prototype-card {
+            background: var(--background);
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .prototype-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), #059A4D);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s;
+        }
+
+        .prototype-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 48px rgba(0,0,0,0.2);
+        }
+
+        .prototype-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 16px;
+        }
+
+        .card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .card-tag {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .tag-v2 {
+            background: #FFF7E6;
+            color: #FA8C16;
+        }
+
+        .tag-new {
+            background: #F6FFED;
+            color: var(--primary-color);
+        }
+
+        .tag-core {
+            background: #E6F7FF;
+            color: var(--level-b);
+        }
+
+        .doc-section {
+            background: var(--background);
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        .doc-list {
+            list-style: none;
+        }
+
+        .doc-item {
+            padding: 16px 0;
+            border-bottom: 1px solid var(--background-light);
+        }
+
+        .doc-item:last-child {
+            border-bottom: none;
+        }
+
+        .doc-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+
+        .doc-link:hover {
+            color: #059A4D;
+            transform: translateX(4px);
+        }
+
+        .doc-icon {
+            font-size: 24px;
+        }
+
+        .footer {
+            text-align: center;
+            color: var(--background);
+            opacity: 0.9;
+            margin-top: 48px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .header h1 {
+                font-size: 32px;
+            }
+
+            .header p {
+                font-size: 16px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+
+            .prototype-card {
+                padding: 20px;
+            }
+
+            .section-title {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🌾 乡村数字化经营生态赋能平台</h1>
+            <p>全生命周期数字化赋能 · 产品原型导航</p>
+            <span class="version-badge">Version 2.0 · 符合最高设计标准</span>
+        </div>
+
+        <!-- 核心模块 -->
+        <div class="section">
+            <h2 class="section-title">核心模块（v2.0升级版）</h2>
+            <div class="cards-grid">
+                <a href="原型-首页v2.html" class="prototype-card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #E6F7FF, #BAE7FF); color: var(--level-b);">🏠</div>
+                    <div class="card-title">数据驾驶舱</div>
+                    <div class="card-desc">个性化数据概览、智能推荐、成长值追踪、待办任务</div>
+                    <div class="card-tags">
+                        <span class="card-tag tag-v2">v2.0</span>
+                        <span class="card-tag tag-core">核心</span>
+                    </div>
+                </a>
+
+                <a href="原型-SABC分层体系v2.html" class="prototype-card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #FFF7E6, #FFE7BA); color: var(--level-a);">📊</div>
+                    <div class="card-title">SABC分层体系</div>
+                    <div class="card-desc">成长金字塔、成长值系统、等级权益对比、晋升路径</div>
+                    <div class="card-tags">
+                        <span class="card-tag tag-v2">v2.0</span>
+                        <span class="card-tag tag-core">核心</span>
+                    </div>
+                </a>
+
+                <a href="交互原型-数据中台.html" class="prototype-card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #F6FFED, #D9F7BE); color: var(--primary-color);">📈</div>
+                    <div class="card-title">数据中台</div>
+                    <div class="card-desc">全周期数据追踪、智能分析、可视化看板、成效量化</div>
+                    <div class="card-tags">
+                        <span class="card-tag tag-new">新增</span>
+                        <span class="card-tag tag-core">核心</span>
+                    </div>
+                </a>
+
+                <a href="交互原型-精准筛选.html" class="prototype-card">
+                    <div class="card-icon" style="background: linear-gradient(135deg, #FFF0F6, #FFD6E7); color: #EB2F96;">🎯</div>
+                    <div class="card-title">精准筛选系统</div>
+                    <div class="card-desc">学员招募、基础评估、产业匹配、准入审核</div>
+                    <div class="card-tags">
+                        <span class="card-tag tag-new">新增</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 学习培育 -->
+        <div class="section">
+            <h2 class="section-title">学习培育模块</h2>
+            <div class="cards-grid">
+                <a href="交互原型-课程中心.html" class="prototype-card">
+                    <div class="card-icon" style="background: #F9F0FF; color: #722ED1;">📚</div>
+                    <div class="card-title">学习中心</div>
+                    <div class="card-desc">课程体系、学习路径、进度追踪</div>
+                </a>
+
+                <a href="交互原型-学习路径.html" class="prototype-card">
+                    <div class="card-icon" style="background: #E6F7FF; color: var(--level-b);">🛤️</div>
+                    <div class="card-title">学习路径</div>
+                    <div class="card-desc">个性化路径、能力诊断、里程碑</div>
+                </a>
+
+                <a href="交互原型-知识图谱.html" class="prototype-card">
+                    <div class="card-icon" style="background: #F6FFED; color: var(--primary-color);">🗺️</div>
+                    <div class="card-title">知识图谱</div>
+                    <div class="card-desc">可视化知识体系、节点关联</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 资源对接 -->
+        <div class="section">
+            <h2 class="section-title">资源对接模块</h2>
+            <div class="cards-grid">
+                <a href="交互原型-数字化名片.html" class="prototype-card">
+                    <div class="card-icon" style="background: #FFF0F6; color: #EB2F96;">👤</div>
+                    <div class="card-title">数字化名片</div>
+                    <div class="card-desc">能力展示、服务需求、资源对接</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 社群运营 -->
+        <div class="section">
+            <h2 class="section-title">社群运营模块</h2>
+            <div class="cards-grid">
+                <a href="交互原型-社区首页.html" class="prototype-card">
+                    <div class="card-icon" style="background: #F9F0FF; color: #722ED1;">💬</div>
+                    <div class="card-title">社群首页</div>
+                    <div class="card-desc">动态发布、问答互助、经验交流</div>
+                </a>
+
+                <a href="交互原型-活动中心.html" class="prototype-card">
+                    <div class="card-icon" style="background: #FFF7E6; color: #FA8C16;">🎯</div>
+                    <div class="card-title">活动中心</div>
+                    <div class="card-desc">运营活动、陪跑营、经验分享</div>
+                </a>
+
+                <a href="交互原型-活动详情.html" class="prototype-card">
+                    <div class="card-icon" style="background: #FFF7E6; color: #FA8C16;">📋</div>
+                    <div class="card-title">活动详情</div>
+                    <div class="card-desc">活动介绍、流程安排、报名参与</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 个人中心 -->
+        <div class="section">
+            <h2 class="section-title">个人中心模块</h2>
+            <div class="cards-grid">
+                <a href="交互原型-个人中心.html" class="prototype-card">
+                    <div class="card-icon" style="background: #E6F7FF; color: var(--level-b);">👤</div>
+                    <div class="card-title">个人中心</div>
+                    <div class="card-desc">个人资料、我的课程、系统设置</div>
+                </a>
+
+                <a href="交互原型-数据统计.html" class="prototype-card">
+                    <div class="card-icon" style="background: #F6FFED; color: var(--primary-color);">📊</div>
+                    <div class="card-title">数据统计</div>
+                    <div class="card-desc">经营数据、趋势分析、详细报表</div>
+                </a>
+
+                <a href="交互原型-消息中心.html" class="prototype-card">
+                    <div class="card-icon" style="background: #FFF0F6; color: #EB2F96;">🔔</div>
+                    <div class="card-title">消息中心</div>
+                    <div class="card-desc">系统通知、活动消息、互动提醒</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 产品文档 -->
+        <div class="section">
+            <div class="doc-section">
+                <h2 class="section-title" style="color: var(--text-primary); border-color: var(--background-light);">📄 产品文档</h2>
+                <ul class="doc-list">
+                    <li class="doc-item">
+                        <a href="乡村数字化经营生态赋能-产品方案.md" class="doc-link" target="_blank">
+                            <span class="doc-icon">📋</span>
+                            <div>
+                                <div>完整产品方案</div>
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">产品定位、功能架构、用户角色、创新设计</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="doc-item">
+                        <a href="设计系统-Design-System.md" class="doc-link" target="_blank">
+                            <span class="doc-icon">🎨</span>
+                            <div>
+                                <div>设计系统规范 v2.0</div>
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">色彩、字体、组件、交互规范</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="doc-item">
+                        <a href="产品v2.0-升级说明.md" class="doc-link" target="_blank">
+                            <span class="doc-icon">📈</span>
+                            <div>
+                                <div>产品升级说明</div>
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">v1.0 vs v2.0 对比、核心创新点</div>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="doc-item">
+                        <a href="README-v2.md" class="doc-link" target="_blank">
+                            <span class="doc-icon">📖</span>
+                            <div>
+                                <div>项目说明文档</div>
+                                <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">项目概述、技术栈、使用指南</div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>乡村数字化经营生态赋能平台 · 产品原型 v2.0</p>
+            <p style="margin-top: 8px; font-size: 12px;">基于最高产品设计标准打造</p>
+        </div>
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>乡村数字化经营生态赋能平台</title>
+    <style>
+        :root {
+            /* 主色调 */
+            --primary-color: #07C160;
+            --primary-hover: #06AD56;
+            --primary-light: #E6F7F0;
+            
+            /* 分层等级色 */
+            --level-s: #FFB800;
+            --level-a: #FF6B00;
+            --level-b: #1890FF;
+            --level-c: #8C8C8C;
+            
+            /* 功能色 */
+            --success: #52C41A;
+            --warning: #FAAD14;
+            --error: #FF4D4F;
+            --info: #1890FF;
+            
+            /* 中性色 */
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --text-tertiary: #8C8C8C;
+            --border-base: #D9D9D9;
+            --background: #FFFFFF;
+            --background-light: #FAFAFA;
+            
+            /* 间距 */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            
+            /* 圆角 */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            
+            /* 阴影 */
+            --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Arial, sans-serif;
+            background: var(--background-light);
+            color: var(--text-primary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* 顶部导航栏 */
+        .navbar {
+            background: var(--background);
+            box-shadow: var(--shadow-card);
+            padding: 0 var(--spacing-lg);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background: var(--background-light);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            font-size: 20px;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: #E8E8E8;
+        }
+
+        .icon-btn .badge {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+            width: 18px;
+            height: 18px;
+            background: var(--error);
+            color: var(--background);
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--level-b) 0%, #096DD9 100%);
+            cursor: pointer;
+            border: 2px solid var(--background);
+            box-shadow: var(--shadow-card);
+        }
+
+        /* 主容器 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        /* 用户信息卡片 */
+        .user-card {
+            background: linear-gradient(135deg, var(--level-b) 0%, #096DD9 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            color: var(--background);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .user-avatar-large {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .user-details {
+            flex: 1;
+        }
+
+        .user-name {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .user-level {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .growth-section {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-md);
+        }
+
+        .growth-item {
+            text-align: center;
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            backdrop-filter: blur(10px);
+        }
+
+        .growth-value {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .growth-label {
+            font-size: 12px;
+            opacity: 0.9;
+        }
+
+        /* 核心数据卡片组 */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .metric-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0.0, 0.2, 1);
+            border: 2px solid transparent;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+            border-color: var(--primary-color);
+        }
+
+        .metric-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .metric-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .metric-trend {
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--success);
+        }
+
+        .metric-trend.down {
+            color: var(--error);
+        }
+
+        /* 智能推荐卡片 */
+        .recommendation-card {
+            background: var(--background);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .title-icon {
+            font-size: 20px;
+        }
+
+        .recommendation-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--background-light);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .recommendation-item:hover {
+            background: #F0F0F0;
+            transform: translateX(4px);
+        }
+
+        .rec-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .rec-content {
+            flex: 1;
+        }
+
+        .rec-title {
+            font-weight: 600;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .rec-desc {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .rec-badge {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* 待办任务 */
+        .task-list {
+            list-style: none;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--background-light);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-sm);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .task-item:hover {
+            background: #F0F0F0;
+        }
+
+        .task-checkbox {
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--border-base);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+        }
+
+        .task-checkbox.checked {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        .task-checkbox.checked::after {
+            content: '✓';
+            color: var(--background);
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .task-content {
+            flex: 1;
+        }
+
+        .task-title {
+            font-weight: 500;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .task-meta {
+            font-size: 12px;
+            color: var(--text-tertiary);
+        }
+
+        .task-reward {
+            color: var(--warning);
+            font-weight: 600;
+        }
+
+        /* 响应式 - 移动端优化 */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 0 var(--spacing-md);
+                height: 56px;
+            }
+
+            .nav-brand {
+                font-size: 16px;
+            }
+
+            .icon-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 18px;
+            }
+
+            .avatar {
+                width: 36px;
+                height: 36px;
+            }
+
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .user-card {
+                padding: var(--spacing-md);
+            }
+
+            .user-avatar-large {
+                width: 56px;
+                height: 56px;
+            }
+
+            .user-name {
+                font-size: 20px;
+            }
+
+            .growth-section {
+                grid-template-columns: repeat(3, 1fr);
+                gap: var(--spacing-sm);
+            }
+
+            .growth-value {
+                font-size: 22px;
+            }
+
+            .metrics-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: var(--spacing-sm);
+            }
+
+            .metric-card {
+                padding: var(--spacing-md);
+            }
+
+            .metric-value {
+                font-size: 24px;
+            }
+
+            .recommendation-card {
+                padding: var(--spacing-md);
+            }
+
+            .card-title {
+                font-size: 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .growth-section {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 底部导航（移动端）*/
+        .bottom-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--background);
+            box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1);
+            padding: var(--spacing-sm) 0;
+            z-index: 1000;
+        }
+
+        .bottom-nav-list {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .bottom-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--spacing-xs);
+            cursor: pointer;
+            padding: var(--spacing-xs);
+            color: var(--text-tertiary);
+            transition: all 0.2s;
+            flex: 1;
+        }
+
+        .bottom-nav-item.active {
+            color: var(--primary-color);
+        }
+
+        .bottom-nav-icon {
+            font-size: 24px;
+        }
+
+        .bottom-nav-label {
+            font-size: 11px;
+        }
+
+        @media (max-width: 768px) {
+            .bottom-nav {
+                display: block;
+            }
+
+            body {
+                padding-bottom: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部导航栏 -->
+    <nav class="navbar">
+        <div class="nav-brand">
+            <span>🌾</span>
+            <span>乡村数字化赋能</span>
+        </div>
+        <div class="nav-actions">
+            <button class="icon-btn" onclick="goToMessages()">
+                🔔
+                <span class="badge">3</span>
+            </button>
+            <div class="avatar" onclick="goToProfile()"></div>
+        </div>
+    </nav>
+
+    <!-- 主容器 -->
+    <div class="container">
+        <!-- 用户信息卡片 -->
+        <div class="user-card">
+            <div class="user-header">
+                <div class="user-info">
+                    <div class="user-avatar-large"></div>
+                    <div class="user-details">
+                        <div class="user-name">张同学</div>
+                        <div class="user-level">
+                            <span>⭐⭐</span>
+                            <span>B级学员</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="growth-section">
+                <div class="growth-item">
+                    <div class="growth-value">2850</div>
+                    <div class="growth-label">成长值</div>
+                </div>
+                <div class="growth-item">
+                    <div class="growth-value">500</div>
+                    <div class="growth-label">积分</div>
+                </div>
+                <div class="growth-item">
+                    <div class="growth-value">95%</div>
+                    <div class="growth-label">距离A级</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 核心数据卡片组 -->
+        <div class="metrics-grid">
+            <div class="metric-card" onclick="goToData('business')">
+                <div class="metric-header">
+                    <span class="metric-label">经营数据</span>
+                    <div class="metric-icon" style="background: #E6F7FF; color: var(--info);">💰</div>
+                </div>
+                <div class="metric-value">50.8万</div>
+                <div class="metric-trend">
+                    <span>↑</span>
+                    <span>8% 较上月</span>
+                </div>
+            </div>
+
+            <div class="metric-card" onclick="goToData('growth')">
+                <div class="metric-header">
+                    <span class="metric-label">成长数据</span>
+                    <div class="metric-icon" style="background: #F6FFED; color: var(--success);">📈</div>
+                </div>
+                <div class="metric-value">+150</div>
+                <div class="metric-trend">
+                    <span>↑</span>
+                    <span>本周成长值</span>
+                </div>
+            </div>
+
+            <div class="metric-card" onclick="goToData('learning')">
+                <div class="metric-header">
+                    <span class="metric-label">学习数据</span>
+                    <div class="metric-icon" style="background: #FFF7E6; color: var(--warning);">📚</div>
+                </div>
+                <div class="metric-value">12/20</div>
+                <div class="metric-trend">
+                    <span>进行中</span>
+                </div>
+            </div>
+
+            <div class="metric-card" onclick="goToData('resource')">
+                <div class="metric-header">
+                    <span class="metric-label">资源对接</span>
+                    <div class="metric-icon" style="background: #F9F0FF; color: #722ED1;">🤝</div>
+                </div>
+                <div class="metric-value">5</div>
+                <div class="metric-trend">
+                    <span>待处理</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 智能推荐 -->
+        <div class="recommendation-card">
+            <div class="card-title">
+                <span class="title-icon">🎯</span>
+                <span>智能推荐</span>
+            </div>
+            <div class="recommendation-item" onclick="goToRecommendation('course')">
+                <div class="rec-icon" style="background: #E6F7FF; color: var(--info);">📖</div>
+                <div class="rec-content">
+                    <div class="rec-title">短视频拍摄技巧进阶</div>
+                    <div class="rec-desc">基于你的薄弱项推荐，完成可获得50成长值</div>
+                </div>
+                <span class="rec-badge">推荐</span>
+            </div>
+            <div class="recommendation-item" onclick="goToRecommendation('resource')">
+                <div class="rec-icon" style="background: #F6FFED; color: var(--success);">🔗</div>
+                <div class="rec-content">
+                    <div class="rec-title">供应链资源对接</div>
+                    <div class="rec-desc">王老师（S级）可提供优质农产品供应链</div>
+                </div>
+                <span class="rec-badge">匹配</span>
+            </div>
+            <div class="recommendation-item" onclick="goToRecommendation('activity')">
+                <div class="rec-icon" style="background: #FFF7E6; color: var(--warning);">🎪</div>
+                <div class="rec-content">
+                    <div class="rec-title">本周直播陪跑营</div>
+                    <div class="rec-desc">每周三晚8点，已有23人报名</div>
+                </div>
+                <span class="rec-badge">活动</span>
+            </div>
+        </div>
+
+        <!-- 待办任务 -->
+        <div class="recommendation-card">
+            <div class="card-title">
+                <span class="title-icon">✅</span>
+                <span>待办任务</span>
+            </div>
+            <ul class="task-list">
+                <li class="task-item" onclick="toggleTask(this)">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-title">完成本周数据填报</div>
+                        <div class="task-meta">截止时间：1月20日 | <span class="task-reward">+20成长值</span></div>
+                    </div>
+                </li>
+                <li class="task-item" onclick="toggleTask(this)">
+                    <div class="task-checkbox checked"></div>
+                    <div class="task-content">
+                        <div class="task-title">参加周三陪跑营活动</div>
+                        <div class="task-meta">已完成 | <span class="task-reward">+30成长值</span></div>
+                    </div>
+                </li>
+                <li class="task-item" onclick="toggleTask(this)">
+                    <div class="task-checkbox"></div>
+                    <div class="task-content">
+                        <div class="task-title">完成"短视频技巧"课程</div>
+                        <div class="task-meta">进度：60% | <span class="task-reward">+50成长值</span></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 底部导航（移动端）-->
+    <nav class="bottom-nav">
+        <div class="bottom-nav-list">
+            <div class="bottom-nav-item active" onclick="goToTab('home')">
+                <div class="bottom-nav-icon">🏠</div>
+                <div class="bottom-nav-label">首页</div>
+            </div>
+            <div class="bottom-nav-item" onclick="goToTab('learn')">
+                <div class="bottom-nav-icon">📚</div>
+                <div class="bottom-nav-label">学习</div>
+            </div>
+            <div class="bottom-nav-item" onclick="goToTab('resource')">
+                <div class="bottom-nav-icon">🤝</div>
+                <div class="bottom-nav-label">资源</div>
+            </div>
+            <div class="bottom-nav-item" onclick="goToTab('community')">
+                <div class="bottom-nav-icon">💬</div>
+                <div class="bottom-nav-label">社群</div>
+            </div>
+            <div class="bottom-nav-item" onclick="goToTab('profile')">
+                <div class="bottom-nav-icon">👤</div>
+                <div class="bottom-nav-label">我的</div>
+            </div>
+        </div>
+    </nav>
+
+    <script>
+        function goToMessages() {
+            alert('跳转到消息中心');
+        }
+
+        function goToProfile() {
+            alert('跳转到个人中心');
+        }
+
+        function goToData(type) {
+            alert(`查看${type}数据详情`);
+        }
+
+        function goToRecommendation(type) {
+            alert(`查看推荐：${type}`);
+        }
+
+        function toggleTask(element) {
+            const checkbox = element.querySelector('.task-checkbox');
+            checkbox.classList.toggle('checked');
+        }
+
+        function goToTab(tab) {
+            // 更新选中状态
+            document.querySelectorAll('.bottom-nav-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            alert(`切换到：${tab}`);
+        }
+    </script>
+</body>
+</html>
+
