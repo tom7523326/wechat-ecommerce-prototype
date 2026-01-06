@@ -509,21 +509,21 @@
         }
 
         function goToProfile() {
-            alert('查看用户主页');
+            window.location.href = '交互原型-数字化名片.html';
         }
 
         function filterByTag(tag) {
-            alert(`筛选话题：${tag}`);
+            window.location.href = '交互原型-社区首页.html?tag=' + encodeURIComponent(tag);
         }
 
         function likePost() {
             const btn = event.target;
             if (btn.classList.contains('active')) {
                 btn.classList.remove('active');
-                alert('取消点赞');
+                console.log('取消点赞');
             } else {
                 btn.classList.add('active');
-                alert('点赞成功');
+                console.log('点赞成功');
             }
         }
 
@@ -532,19 +532,20 @@
         }
 
         function sharePost() {
-            alert('分享动态');
+            console.log('分享动态');
         }
 
         function submitComment() {
-            alert('发布评论');
+            console.log('发布评论');
+            // 实际应提交评论并刷新列表
         }
 
         function likeComment(id) {
-            alert(`点赞评论 ID: ${id}`);
+            console.log(`点赞评论 ID: ${id}`);
         }
 
         function replyComment(id) {
-            alert(`回复评论 ID: ${id}`);
+            console.log(`回复评论 ID: ${id}`);
         }
     </script>
 </body>

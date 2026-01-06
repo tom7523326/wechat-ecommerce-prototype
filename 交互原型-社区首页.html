@@ -672,15 +672,15 @@
         }
 
         function addImage() {
-            alert('添加图片');
+            console.log('添加图片');
         }
 
         function addTopic() {
-            alert('添加话题标签');
+            console.log('添加话题标签');
         }
 
         function publishPost() {
-            alert('发布动态');
+            console.log('发布动态');
         }
 
         function filterPosts(type) {
@@ -688,7 +688,7 @@
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
-            alert(`筛选类型：${type}`);
+            console.log(`筛选类型：${type}`);
         }
 
         function goToPost(id) {
@@ -700,21 +700,21 @@
             const btn = event.target;
             if (btn.classList.contains('active')) {
                 btn.classList.remove('active');
-                alert(`取消点赞 ID: ${id}`);
+                console.log(`取消点赞 ID: ${id}`);
             } else {
                 btn.classList.add('active');
-                alert(`点赞 ID: ${id}`);
+                console.log(`点赞 ID: ${id}`);
             }
         }
 
         function commentPost(id) {
             event.stopPropagation();
-            alert(`评论 ID: ${id}`);
+            window.location.href = `交互原型-动态详情.html?id=${id}`;
         }
 
         function sharePost(id) {
             event.stopPropagation();
-            alert(`分享 ID: ${id}`);
+            console.log(`分享 ID: ${id}`);
         }
     </script>
 </body>
