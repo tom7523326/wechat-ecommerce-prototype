@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>微信电商能力提升平台 - 原型导航</title>
+    <style>
+        :root {
+            --primary-color: #07C160;
+            --text-primary: #262626;
+            --text-secondary: #595959;
+            --background: #FFFFFF;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", sans-serif;
+            background: linear-gradient(135deg, #07C160 0%, #059A4D 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            color: var(--background);
+            margin-bottom: 48px;
+        }
+
+        .header h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+
+        .module-section {
+            margin-bottom: 32px;
+        }
+
+        .module-title {
+            color: var(--background);
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 4px solid var(--background);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--background);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transition: all 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+        }
+
+        .card-icon {
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 24px 16px;
+            }
+
+            .header h1 {
+                font-size: 28px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>微信电商能力提升平台</h1>
+            <p>产品原型完整导航</p>
+        </div>
+
+        <!-- 模块1：学员准入 -->
+        <div class="module-section">
+            <h2 class="module-title">📝 学员准入</h2>
+            <div class="cards-grid">
+                <a href="交互原型-学员准入.html" class="card">
+                    <div class="card-icon">📋</div>
+                    <div class="card-title">准入问卷</div>
+                    <div class="card-desc">基础信息填写、能力评估、学习目标设定</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 模块2：知识图谱与课程体系 -->
+        <div class="module-section">
+            <h2 class="module-title">📚 知识图谱与课程体系</h2>
+            <div class="cards-grid">
+                <a href="交互原型-知识图谱.html" class="card">
+                    <div class="card-icon">🗺️</div>
+                    <div class="card-title">知识图谱</div>
+                    <div class="card-desc">可视化知识体系、节点关联、学习路径</div>
+                </a>
+                <a href="交互原型-课程中心.html" class="card">
+                    <div class="card-icon">📖</div>
+                    <div class="card-title">课程中心</div>
+                    <div class="card-desc">课程列表、筛选搜索、学习进度</div>
+                </a>
+                <a href="交互原型-学习路径.html" class="card">
+                    <div class="card-icon">🛤️</div>
+                    <div class="card-title">学习路径</div>
+                    <div class="card-desc">个性化路径、能力诊断、里程碑奖励</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 模块3：学员数字化名片 -->
+        <div class="module-section">
+            <h2 class="module-title">👤 学员数字化名片</h2>
+            <div class="cards-grid">
+                <a href="交互原型-数字化名片.html" class="card">
+                    <div class="card-icon">📇</div>
+                    <div class="card-title">我的名片</div>
+                    <div class="card-desc">能力展示、数据概况、服务与需求</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 模块4：学员分层体系 -->
+        <div class="module-section">
+            <h2 class="module-title">⭐ 学员分层体系</h2>
+            <div class="cards-grid">
+                <a href="交互原型-学员等级.html" class="card">
+                    <div class="card-icon">🏆</div>
+                    <div class="card-title">SABC分层</div>
+                    <div class="card-desc">等级体系、权益义务、晋升申请</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 模块5：常态化运营活动 -->
+        <div class="module-section">
+            <h2 class="module-title">🎯 常态化运营活动</h2>
+            <div class="cards-grid">
+                <a href="交互原型-活动中心.html" class="card">
+                    <div class="card-icon">📅</div>
+                    <div class="card-title">活动中心</div>
+                    <div class="card-desc">政策解读、经验分享、线下实训</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 模块6：常态化交流社区 -->
+        <div class="module-section">
+            <h2 class="module-title">💬 常态化交流社区</h2>
+            <div class="cards-grid">
+                <a href="交互原型-社区首页.html" class="card">
+                    <div class="card-icon">💭</div>
+                    <div class="card-title">社区首页</div>
+                    <div class="card-desc">动态发布、问答互助、经验交流</div>
+                </a>
+            </div>
+        </div>
+
+        <!-- 其他功能 -->
+        <div class="module-section">
+            <h2 class="module-title">🔧 其他功能</h2>
+            <div class="cards-grid">
+                <a href="交互原型-首页.html" class="card">
+                    <div class="card-icon">🏠</div>
+                    <div class="card-title">首页</div>
+                    <div class="card-desc">数据概览、学习进度、推荐内容</div>
+                </a>
+                <a href="交互原型-个人中心.html" class="card">
+                    <div class="card-icon">👤</div>
+                    <div class="card-title">个人中心</div>
+                    <div class="card-desc">个人资料、系统设置、帮助中心</div>
+                </a>
+                <a href="交互原型-数据统计.html" class="card">
+                    <div class="card-icon">📊</div>
+                    <div class="card-title">数据统计</div>
+                    <div class="card-desc">经营数据、趋势分析、详细报表</div>
+                </a>
+                <a href="交互原型-消息中心.html" class="card">
+                    <div class="card-icon">🔔</div>
+                    <div class="card-title">消息中心</div>
+                    <div class="card-desc">系统通知、活动消息、互动提醒</div>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
